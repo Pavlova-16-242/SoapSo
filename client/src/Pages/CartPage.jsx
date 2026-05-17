@@ -1,6 +1,5 @@
 // Хуки
 import React from "react"
-import { useNavigate } from "react-router-dom"
 // Модули
 import Header from "../Components/Header.jsx"
 import UpButton from "../Components/UpButton.jsx"
@@ -12,7 +11,6 @@ import card_pine from "../assets/image/catalogue/pine.webp"
 import icon_trash from "../assets/icon/trash.webp"
 
 const CartPage = () => {
-	const navigate = useNavigate()
   return (
     <div>
 			<Header/>
