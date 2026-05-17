@@ -11,7 +11,7 @@ import icon_user from "../assets/icon/user.webp"
 import icon_user_hover from "../assets/icon/user-hover.webp"
 
 const Navbar = () => {
-  const [isAuthOpen, setIsAuthOpen] = useState(false);  
+  // const [isAuthOpen, setIsAuthOpen] = useState(false);  
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   const customNavigate = (path)=>{

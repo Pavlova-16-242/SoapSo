@@ -10,7 +10,7 @@ const Catalogue = () => {
       <UpButton/>
       <section className="flex">
         <div className="">
-          <h2 className="">выв</h2>
+          {/* <h2 className=""></h2> */}
           <p className=""></p>
           <img src="" alt="" className="" />
         </div>
