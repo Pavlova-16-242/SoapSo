@@ -10,7 +10,7 @@ const Footer = () => {
   const navigate = useNavigate()
   return (
     <div>
-      <footer className="text-xl flex justify-around bg-cyan-100/70 p-16">
+      <footer className="lg:text-xl text-md flex lg:flex-row flex-col gap-4 justify-around  bg-cyan-100/70 p-16">
         <div className="">
           <a onClick={()=>navigate("/")} href="#header" 
           className="">

@@ -44,20 +44,20 @@ const HomePage = () => {
       <Header/>
       <UpButton/>
 {/* Главная */}
-      <section id="home" className="h-screen overflow-hidden pt-32 -mb-16">
-        <div className="absolute z-10 mx-64">
-          <h1 className="font-serif text-8xl">Красота.<br/>Чистота.<br/>
+      <section id="home" className="lg:h-screen overflow-hidden lg:pt-32 pt-8 place-content-center">
+        <div className="z-10 relative lg:mx-64 mx-12 ">
+          <h1 className="font-serif lg:text-8xl text-3xl">Красота.<br/>Чистота.<br/>
             <span className="font-myfont text-cyan-600">Ручная работа.</span>
           </h1>
-          <p className="my-16 w-96 text-4xl">Натуральное мыло ручной работы для вашей кожи и удовольствия каждый день.</p>
-          <a href="#hits" className="rounded-full text-3xl py-4 px-12 bg-cyan-600 text-white hover:bg-cyan-900 duration-300">Выбрать мыло<span className="pl-8">→</span></a>        
+          <p className="lg:my-16 my-2 max-w-96 lg:text-4xl text-lg">Натуральное мыло ручной работы для вашей кожи и удовольствия каждый день.</p>
+          <a href="#hits" className="rounded-full lg:text-3xl py-4 px-12 bg-cyan-600 text-white hover:bg-cyan-900 duration-300">Выбрать мыло<span className="pl-8">→</span></a>        
         </div>
-        <div className="float-right">
-          <img src={hero} alt="Хит продаж" className="" />
+        <div className="relative float-right lg:translate-x-24 translate-x-8 lg:-translate-y-full lg:max-w-full max-w-96 ">
+          <img src={hero} alt="Декор" className="" />
         </div>
       </section>
 {/* Хиты */}
-      <section id="hits" className="max-w-[1400px] mx-auto py-16 xl:block" >
+      <section id="hits" className="max-w-[1400px] mx-auto py-16 xl:block hidden" >
         <div className="flex justify-between">
   {/* Заголовок секции */}
           <h2 className="font-serif text-6xl">Наши хиты</h2>
@@ -258,7 +258,7 @@ const HomePage = () => {
         </div>  
       </section>
 {/* Факты о компании */}
-      <section className="max-w-[1400px] mx-auto py-16" id="about">
+      <section className="max-w-[1400px] mx-auto py-16 hidden" id="about">
         <h2 className="text-center font-serif text-6xl">Почему выбирают нас</h2>
         <div className="text-center bg-white/50 rounded-3xl p-12 mt-8 grid grid-cols-5 gap-5">
           <div className="place-items-center grid grid-rows-2">
@@ -299,7 +299,7 @@ const HomePage = () => {
         </div>
       </section>
 {/* Отзывы */}
-      <section className="max-w-[1400px] mx-auto py-16" id="reviews">
+      <section className="max-w-[1400px] mx-auto py-16 hidden" id="reviews">
         <h2 className="text-center font-serif text-6xl">Отзывы наших заказчиков</h2>
         <div className="grid grid-cols-3 gap-5 mt-8">
           <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3">
@@ -362,7 +362,7 @@ const HomePage = () => {
         </div>
       </section>
 {/* Форма подписки */}
-      <section className="max-w-[1400px] mx-auto py-32 ">
+      <section className="max-w-[1400px] mx-auto py-32 hidden">
         <div className="relative">
           <img src={bubble} alt="" className="absolute w-52 opacity-70 top-4 left-8" />
           <img src={bubble} alt="" className="absolute w-24 right-24 opacity-70 -top-4" />

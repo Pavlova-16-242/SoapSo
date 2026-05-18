@@ -22,7 +22,7 @@ html{
     font-family: "Main";
     scroll-behavior: smooth;
     background-image: url(./assets/image/background.webp);
-    background-position: center;
+    background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
     color: #164e63;
