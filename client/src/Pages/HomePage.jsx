@@ -30,7 +30,7 @@ import card_coconut from "../assets/image/catalogue/coconut.webp"
 import card_pine from "../assets/image/catalogue/pine.webp"
 import card_honey from "../assets/image/catalogue/honey.webp"
 import card_flower from "../assets/image/catalogue/flower.webp"
-import card_mix from "../assets/image/catalogue/mix.webp"
+import card_mix from "../assets/image/catalogue/mix-long.webp"
 // Изображения:Пользователи
 import user_anastasia from "../assets/image/users/anastasia.webp"
 import user_natalia from "../assets/image/users/natalia.webp"
@@ -63,7 +63,7 @@ const HomePage = () => {
         <div className="flex justify-between">
   {/* Заголовок секции */}
           <h2 className="font-serif text-6xl">Наши хиты</h2>
-          <button onClick={()=>navigate("/")} className="text-6xl">Полный каталог →</button>          
+          <button onClick={()=>navigate("/catalogue")} className="text-6xl">Полный каталог →</button>          
         </div>
   {/* Сетка каталога */}
         <div className="bg-white/70 rounded-3xl p-5 mt-8 grid grid-cols-10 gap-5">
@@ -74,7 +74,7 @@ const HomePage = () => {
             <div className="col-span-2 relative p-4">
               <h3 className="text-4xl">Морская свежесть</h3>
               <p className="text-2xl text-cyan-600">с морской солью и водорослями</p>
-              <div className="flex justify-between absolute right-8 bottom-8 left-8">
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
               <p className="text-4xl font-semibold">450 Р</p>
                 <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
                   <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
@@ -90,7 +90,7 @@ const HomePage = () => {
             <div className="col-span-2 relative p-4">
               <h3 className="text-4xl">Овсяное молочко</h3>
               <p className="text-2xl text-cyan-600">с овсяными хлопьями и медом</p>
-              <div className="flex justify-between absolute right-8 bottom-8 left-8">
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
               <p className="text-4xl font-semibold">410 Р</p>
                 <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
                   <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
@@ -106,7 +106,7 @@ const HomePage = () => {
             <div className="row-span-1 relative p-4">
               <h3 className="text-4xl">Лавандовое облако</h3>
               <p className="text-2xl text-cyan-600">с лавандой и маслом ши</p>
-              <div className="flex justify-between absolute right-8 bottom-8 left-8">
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
               <p className="text-4xl font-semibold">420 Р</p>
                 <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
                   <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
@@ -122,7 +122,7 @@ const HomePage = () => {
             <div className="row-span-1 relative p-4">
               <h3 className="text-4xl">Мятный бриз</h3>
               <p className="text-2xl text-cyan-600">с мятой и эфирным маслом эвкалипта</p>
-              <div className="flex justify-between absolute right-8 bottom-8 left-8">
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
               <p className="text-4xl font-semibold">430 Р</p>
                 <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
                   <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
@@ -138,7 +138,7 @@ const HomePage = () => {
             <div className="row-span-1 relative p-4">
               <h3 className="text-4xl">Спа-уголь</h3>
               <p className="text-2xl text-cyan-600">с активированным углем и маслом чайного дерева</p>
-              <div className="flex justify-between absolute right-8 bottom-8 left-8">
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
               <p className="text-4xl font-semibold">430 Р</p>
                 <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
                   <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
@@ -154,7 +154,7 @@ const HomePage = () => {
             <div className="row-span-2 relative p-4">
               <h3 className="text-4xl">Цитрусовый рассвет</h3>
               <p className="text-2xl text-cyan-600">с апельсином и маслом миндаля</p>
-              <div className="flex justify-between absolute right-8 bottom-8 left-8">
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
               <p className="text-4xl font-semibold">440 Р</p>
                 <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
                   <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
@@ -180,13 +180,13 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="bg-white col-span-4 row-span-2 grid grid-cols-4 rounded-2xl relative">
-            <img src={card_coconut} alt="" className="col-span-2 rounded-t-2xl " />
-            <div className="absolute w-full h-full bg-gradient-to-t from-white from-50% to-70% rounded-b-2xl"></div>
+          <div className="bg-white col-span-4 row-span-2 grid grid-cols-5 rounded-2xl relative">
+            <img src={card_coconut} alt="" className="col-span-3 rounded-l-2xl" />
+            <div className="absolute w-full h-full bg-gradient-to-l from-white from-40% to-70% rounded-r-2xl"></div>
             <div className="col-span-2 relative p-4">
               <h3 className="text-4xl">Кокосовый рай</h3>
               <p className="text-2xl text-cyan-600">с кокосовым маслом и стружкой кокоса</p>
-              <div className="flex justify-between absolute right-8 bottom-8 left-8">
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
               <p className="text-4xl font-semibold">440 Р</p>
                 <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
                   <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
@@ -196,92 +196,75 @@ const HomePage = () => {
             </div>
           </div>    
 
-
-
-
-
-          <div className="bg-black p-16 col-span-4 row-span-3"></div>
-          <div className="bg-black p-16 col-span-2 row-span-3"></div>
-          <div className="bg-black p-16 col-span-4 row-span-3"></div>
-          <div className="bg-black p-16 col-span-10 row-span-2"></div>
-        </div>
-
-
-        <div className="bg-white/70 rounded-3xl p-5 mt-8 grid grid-cols-5 grid-rows-7 gap-5">
-
-
-    {/* Карточка товара 8*/}
-          <div className=" duration-300 col-span-2 relative  rounded-2xl">
-            <img src={card_coconut} alt="Мыло `Кокосовый рай`" className="rounded-2xl h-full object-cover" />
-          </div>
-    {/* Карточка товара 9*/}
-          <div className=" duration-300 col-span-2 row-span-2 relative  rounded-2xl">
-            <img src={card_pine} alt="Мыло `Хвойный лес`" 
-            className="rounded-2xl h-full object-cover" />
-            <div className="w-full z-5  p-8 rounded-b-2xl h-[300px] absolute bottom-0 pt-[150px] ">
+          <div className="bg-white col-span-4 row-span-3 grid grid-rows-5 rounded-2xl relative overflow-hidden">
+            <img src={card_pine} alt="" className="absolute" />
+            <div className="row-span-3"></div>
+            <div className="absolute w-full h-full bg-gradient-to-t from-white from-40% to-70% rounded-r-2xl"></div>
+            <div className="row-span-2 relative p-4">
               <h3 className="text-4xl">Хвойный лес</h3>
               <p className="text-2xl text-cyan-600">с эфирным маслом хвои и зеленой глиной</p>
-              <div className="flex justify-between items-center">
-                <p className="text-4xl font-semibold">430 Р</p>
-                <button className="text-xl hover:underline hover:text-cyan-600">Перейти к товару →</button>
-              
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
+              <p className="text-4xl font-semibold">430 Р</p>
                 <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
                   <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
                   <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
                 </button>   
               </div>
-            </div>  
-          </div>
-    {/* Карточка товара 10*/}
-          <div className=" duration-300 col-span-1 row-span-2 relative  rounded-2xl">
-            <img src={card_honey} alt="Мыло `Мед и прополис`" className="rounded-2xl h-full object-cover" />
-            <div className="w-full z-5  p-8 rounded-b-2xl h-[340px] absolute bottom-0 pt-[150px] ">
+            </div>
+          </div>    
+
+          <div className="bg-white col-span-2 row-span-3 grid grid-rows-4 rounded-2xl relative">
+            <img src={card_honey} alt="" className="row-span-2 rounded-t-2xl " />
+            <div className="absolute w-full h-full bg-gradient-to-t from-white from-50% to-70% rounded-b-2xl"></div>
+            <div className="row-span-2 relative p-4">
               <h3 className="text-4xl">Мед и прополис</h3>
               <p className="text-2xl text-cyan-600">с медом и экстрактом прополиса</p>
-              <div className="flex justify-between items-center">
-                <p className="text-4xl font-semibold">420 Р</p>
-                <button className="text-xl hover:underline hover:text-cyan-600">Перейти к товару →</button>
-              
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" 
-                  className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" 
-                  className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>  
-          </div>
-    {/* Карточка товара 11*/}
-          <div className=" duration-300 col-span-2 row-span-2 relative  rounded-2xl">
-            <img src={card_flower} alt="Мыло `Цветочный букет`" className="rounded-2xl h-full object-cover" />
-            <div className="w-full z-5  p-8 rounded-b-2xl h-[300px] absolute bottom-0 pt-[150px] ">
-              <h3 className="text-4xl">Цветочный букет</h3>
-              <p className="text-2xl text-cyan-600">с лепестками роз и маслом ши</p>
-              <div className="flex justify-between items-center">
-                <p className="text-4xl font-semibold">450 Р</p>
-                <button className="text-xl hover:underline hover:text-cyan-600">Перейти к товару →</button>
-              
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
+              <p className="text-4xl font-semibold">420 Р</p>
                 <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
                   <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
                   <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
                 </button>   
               </div>
-            </div>  
+            </div>
           </div>
-    {/* Карточка товара 12*/}
-          <div className=" duration-300 col-span-5 relative  rounded-2xl">
-            <img src={card_mix} alt="Набор мыла `Морское наслаждение`" className="rounded-2xl h-full object-cover" />
-              <button className="text-xl hover:underline hover:text-cyan-600">Перейти к товару →</button>
-            
-              <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-              </button>   
-          </div>
-        </div>  
+
+          <div className="bg-white col-span-4 row-span-3 grid grid-rows-5 rounded-2xl relative overflow-hidden">
+            <img src={card_flower} alt="" className="absolute" />
+            <div className="row-span-3"></div>
+            <div className="absolute w-full h-full bg-gradient-to-t from-white from-40% to-70% rounded-r-2xl"></div>
+            <div className="row-span-2 relative p-4">
+              <h3 className="text-4xl">Цветочный букет</h3>
+              <p className="text-2xl text-cyan-600">с лепестками роз и маслом ши</p>
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
+              <p className="text-4xl font-semibold">450 Р</p>
+                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
+                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
+                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
+                </button>   
+              </div>
+            </div>
+          </div>    
+
+          <div className="bg-white col-span-10 grid grid-cols-10 rounded-2xl relative">
+            <img src={card_mix} alt="" className="col-span-7 rounded-l-2xl" />
+            <div className="absolute w-full h-full bg-gradient-to-l from-white from-30% to-70% rounded-r-2xl"></div>
+            <div className="col-span-3 relative p-4">
+              <h3 className="text-4xl">Набор "Микс"</h3>
+              <p className="text-2xl text-cyan-600">3 случайных виды мыла в подарочной упаковке</p>
+              <div className="flex justify-between absolute right-4 bottom-4 left-4">
+              <p className="text-4xl font-semibold">1100 Р</p>
+                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
+                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
+                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
+                </button>   
+              </div>
+            </div>
+          </div>    
+        </div>
       </section>
 {/* Факты о компании */}
-      <section className="max-w-[1400px] mx-auto py-16 hidden" id="about">
+      <section className="max-w-[1400px] mx-auto py-16 " id="about">
         <h2 className="text-center font-serif text-6xl">Почему выбирают нас</h2>
         <div className="text-center bg-white/50 rounded-3xl p-12 mt-8 grid grid-cols-5 gap-5">
           <div className="place-items-center grid grid-rows-2">
@@ -322,7 +305,7 @@ const HomePage = () => {
         </div>
       </section>
 {/* Отзывы */}
-      <section className="max-w-[1400px] mx-auto py-16 hidden" id="reviews">
+      <section className="max-w-[1400px] mx-auto py-16 " id="reviews">
         <h2 className="text-center font-serif text-6xl">Отзывы наших заказчиков</h2>
         <div className="grid grid-cols-3 gap-5 mt-8">
           <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3">
@@ -385,7 +368,7 @@ const HomePage = () => {
         </div>
       </section>
 {/* Форма подписки */}
-      <section className="max-w-[1400px] mx-auto py-32 hidden">
+      <section className="max-w-[1400px] mx-auto py-32 ">
         <div className="relative">
           <img src={bubble} alt="" className="absolute w-52 opacity-70 top-4 left-8" />
           <img src={bubble} alt="" className="absolute w-24 right-24 opacity-70 -top-4" />
