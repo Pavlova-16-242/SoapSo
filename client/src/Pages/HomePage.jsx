@@ -1,9 +1,17 @@
 // Библиотеки
-import React from "react"
+import React, { useState, useEffect } from "react"
+import { useAuth } from '../context/AuthContext'
+import { useCart } from '../context/CartContext'
+import { useNavigate } from 'react-router-dom'
+import { productsAPI } from '../services/api'
+
+
 // Модули
-import Header from "../Components/Header.jsx"
-import UpButton from "../Components/UpButton.jsx"
-import Footer from "../Components/Footer.jsx"
+import Header from "../components/Header.jsx"
+import UpButton from "../components/UpButton.jsx"
+import Footer from "../components/Footer.jsx"
+import AuthModal from '../components/AuthModal'
+import SoapProductCard from '../components/SoapProductCard';
 // Изображения:Иконки
 import icon_bag_w from "../assets/icon/bag-w.webp"
 import icon_bag_w_hover from "../assets/icon/bag-w-hover.webp"
@@ -35,16 +43,46 @@ import card_mix from "../assets/image/catalogue/mix-long.webp"
 import user_anastasia from "../assets/image/users/anastasia.webp"
 import user_natalia from "../assets/image/users/natalia.webp"
 import user_kristina from "../assets/image/users/kristina.webp"
-import { useNavigate } from "react-router-dom"
+
+
 const HomePage = () => {
-  const navigate = useNavigate()
-  return (
-    <div>
+    
+    const { user } = useAuth();
+    const [showAuthModal, setShowAuthModal] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchProducts();
+        // Делаем функцию показа модального окна доступной глобально для навигации
+        window.showAuthModal = () => setShowAuthModal(true);
+        
+        return () => {
+            delete window.showAuthModal;
+        };
+    }, []);
+
+    const fetchProducts = async () => {
+        try {
+            const response = await productsAPI.getProducts();
+            setProducts(response.data);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="min-h-screen">
+            <div className="max-w-7xl mx-auto">
+
 {/* Шапка */}
       <Header/>
       <UpButton/>
 {/* Главная */}
-      <section id="home" className="h-screen overflow-hidden lg:pt-32 pt-8 lg:-mb-16 ">
+      <section id="home" className=" overflow-hidden lg:pt-32 pt-8 lg:-mb-16 ">
         <div className="absolute z-10 lg:mx-64 px-4">
           <h1 className="font-serif lg:text-8xl text-3xl">Красота.<br/>Чистота.<br/>
             <span className="font-myfont text-cyan-600">Ручная работа.</span>
@@ -66,246 +104,36 @@ const HomePage = () => {
           <button onClick={()=>navigate("/catalogue")} className="text-6xl">Полный каталог →</button>          
         </div>
   {/* Сетка каталога */}
-        <div className="bg-white/70 rounded-3xl p-5 mt-8 grid grid-cols-10 gap-5">
-
-          <div className="bg-white col-span-5 row-span-1 grid grid-cols-5 rounded-2xl relative">
-            <img src={card_sea} alt="" className="col-span-3 rounded-l-2xl " />
-            <div className="absolute w-full h-full bg-gradient-to-l from-white from-40% to-70% rounded-r-2xl"></div>
-            <div className="col-span-2 relative p-4">
-              <h3 className="text-4xl">Морская свежесть</h3>
-              <p className="text-2xl text-cyan-600">с морской солью и водорослями</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">450 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white col-span-5 row-span-1 grid grid-cols-5 rounded-2xl relative">
-            <img src={card_milk} alt="" className="col-span-3 rounded-l-2xl " />
-            <div className="absolute w-full h-full bg-gradient-to-l from-white from-40% to-70% rounded-r-2xl"></div>
-            <div className="col-span-2 relative p-4">
-              <h3 className="text-4xl">Овсяное молочко</h3>
-              <p className="text-2xl text-cyan-600">с овсяными хлопьями и медом</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">410 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white col-span-3 row-span-1 grid grid-rows-3 rounded-2xl relative">
-            <img src={card_lavender} alt="" className="row-span-2 rounded-t-2xl " />
-            <div className="absolute w-full h-full bg-gradient-to-t from-white from-40% to-70% rounded-b-2xl"></div>
-            <div className="row-span-1 relative p-4">
-              <h3 className="text-4xl">Лавандовое облако</h3>
-              <p className="text-2xl text-cyan-600">с лавандой и маслом ши</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">420 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white col-span-3 row-span-1 grid grid-rows-3 rounded-2xl relative">
-            <img src={card_mint} alt="" className="row-span-2 rounded-t-2xl " />
-            <div className="absolute w-full h-full bg-gradient-to-t from-white from-40% to-70% rounded-b-2xl"></div>
-            <div className="row-span-1 relative p-4">
-              <h3 className="text-4xl">Мятный бриз</h3>
-              <p className="text-2xl text-cyan-600">с мятой и эфирным маслом эвкалипта</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">430 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white col-span-4 row-span-3 grid grid-rows-3 rounded-2xl relative">
-            <img src={card_coal} alt="" className="row-span-2 rounded-t-2xl " />
-            <div className="absolute w-full h-full bg-gradient-to-t from-white from-40% to-70% rounded-b-2xl"></div>
-            <div className="row-span-1 relative p-4">
-              <h3 className="text-4xl">Спа-уголь</h3>
-              <p className="text-2xl text-cyan-600">с активированным углем и маслом чайного дерева</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">430 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white col-span-2 row-span-4 grid grid-rows-4 rounded-2xl relative">
-            <img src={card_citrus} alt="" className="row-span-2 rounded-t-2xl " />
-            <div className="absolute w-full h-full bg-gradient-to-t from-white from-50% to-70% rounded-b-2xl"></div>
-            <div className="row-span-2 relative p-4">
-              <h3 className="text-4xl">Цитрусовый рассвет</h3>
-              <p className="text-2xl text-cyan-600">с апельсином и маслом миндаля</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">440 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white col-span-4 row-span-4 grid grid-rows-4 grid-cols-4 rounded-full relative scale-110 z-10 ">
-            <img src={card_pink} alt="" className="col-span-4 row-span-4 row-start-1 rounded-full ring-white ring-[20px]" />
-            <div className="absolute w-full h-full bg-gradient-to-t from-white to-70% rounded-full"></div>
-            <div className="col-start-3 absolute p-4 bg-white rounded-2xl bottom-0">
-              <h3 className="text-4xl">Розовая глина</h3>
-              <p className="text-2xl text-cyan-600">с розовой глиной и маслом жожоба</p>
-              <div className="flex justify-between">
-              <p className="text-4xl font-semibold">410 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white col-span-4 row-span-2 grid grid-cols-5 rounded-2xl relative">
-            <img src={card_coconut} alt="" className="col-span-3 rounded-l-2xl" />
-            <div className="absolute w-full h-full bg-gradient-to-l from-white from-40% to-70% rounded-r-2xl"></div>
-            <div className="col-span-2 relative p-4">
-              <h3 className="text-4xl">Кокосовый рай</h3>
-              <p className="text-2xl text-cyan-600">с кокосовым маслом и стружкой кокоса</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">440 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>    
-
-          <div className="bg-white col-span-4 row-span-3 grid grid-rows-5 rounded-2xl relative overflow-hidden">
-            <img src={card_pine} alt="" className="absolute" />
-            <div className="row-span-3"></div>
-            <div className="absolute w-full h-full bg-gradient-to-t from-white from-40% to-70% rounded-r-2xl"></div>
-            <div className="row-span-2 relative p-4">
-              <h3 className="text-4xl">Хвойный лес</h3>
-              <p className="text-2xl text-cyan-600">с эфирным маслом хвои и зеленой глиной</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">430 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>    
-
-          <div className="bg-white col-span-2 row-span-3 grid grid-rows-4 rounded-2xl relative">
-            <img src={card_honey} alt="" className="row-span-2 rounded-t-2xl " />
-            <div className="absolute w-full h-full bg-gradient-to-t from-white from-50% to-70% rounded-b-2xl"></div>
-            <div className="row-span-2 relative p-4">
-              <h3 className="text-4xl">Мед и прополис</h3>
-              <p className="text-2xl text-cyan-600">с медом и экстрактом прополиса</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">420 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white col-span-4 row-span-3 grid grid-rows-5 rounded-2xl relative overflow-hidden">
-            <img src={card_flower} alt="" className="absolute" />
-            <div className="row-span-3"></div>
-            <div className="absolute w-full h-full bg-gradient-to-t from-white from-40% to-70% rounded-r-2xl"></div>
-            <div className="row-span-2 relative p-4">
-              <h3 className="text-4xl">Цветочный букет</h3>
-              <p className="text-2xl text-cyan-600">с лепестками роз и маслом ши</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">450 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>    
-
-          <div className="bg-white col-span-10 grid grid-cols-10 rounded-2xl relative">
-            <img src={card_mix} alt="" className="col-span-7 rounded-l-2xl" />
-            <div className="absolute w-full h-full bg-gradient-to-l from-white from-30% to-70% rounded-r-2xl"></div>
-            <div className="col-span-3 relative p-4">
-              <h3 className="text-4xl">Набор "Микс"</h3>
-              <p className="text-2xl text-cyan-600">3 случайных виды мыла в подарочной упаковке</p>
-              <div className="flex justify-between absolute right-4 bottom-4 left-4">
-              <p className="text-4xl font-semibold">1100 Р</p>
-                <button className="bg-cyan-600 p-3 rounded-full group hover:scale-125 duration-300">
-                  <img src={icon_bag_w} alt="Shoping bag" className="w-6 absolute" />
-                  <img src={icon_bag_w_hover} alt="Shoping bag" className="w-6 opacity-0 group-hover:opacity-100 duration-300" />
-                </button>   
-              </div>
-            </div>
-          </div>    
-        </div>
-      </section>
-{/* Факты о компании */}
-      <section className="max-w-[1400px] mx-auto py-16 " id="about">
-        <h2 className="text-center font-serif text-6xl">Почему выбирают нас</h2>
-        <div className="text-center bg-white/50 rounded-3xl p-12 mt-8 grid grid-cols-5 gap-5">
-          <div className="place-items-center grid grid-rows-2">
-            <div className="bg-white p-4 rounded-full row-span-1">
-              <img src={icon_delivery} alt="" className="m-2 w-24" />              
-            </div>
-            <h3 className="text-4xl font-semibold p-4">Доставка</h3>
-            <p className="text-cyan-600 text-xl">Мы гарантируем быструю и бережную доставку по всей стране и за ее пределами.</p>
-          </div>
-          <div className="place-items-center grid grid-rows-2">
-            <div className="bg-white p-4 rounded-full row-span-1">
-              <img src={icon_check} alt="" className="m-2 w-24" />              
-            </div>
-            <h3 className="text-4xl font-semibold p-4">Сертификат качества</h3>
-            <p className="text-cyan-600 text-xl">Наша продукция регулярно проходит проверки качества и получает номинации в конкурсах.</p>
-          </div>
-          <div className="place-items-center grid grid-rows-2">
-            <div className="bg-white p-4 rounded-full row-span-1">
-              <img src={icon_eco} alt="" className="m-2 w-24" />              
-            </div>
-            <h3 className="text-4xl font-semibold p-4">Состав</h3>
-            <p className="text-cyan-600 text-xl">Мы используем только натуральные материалы и экологичный сотав, не наносящий вреда природе.</p>
-          </div>
-          <div className="place-items-center grid grid-rows-2">
-            <div className="bg-white p-4 rounded-full row-span-1">
-              <img src={icon_gift} alt="" className="m-2 w-24" />              
-            </div>
-            <h3 className="text-4xl font-semibold p-4">Идеальный подарок</h3>
-            <p className="text-cyan-600 text-xl">Фигурное мыло ручной работы понравится и будет полезно всем, независимо от пола и возраста.</p>
-          </div>
-          <div className="place-items-center grid grid-rows-2">
-            <div className="bg-white p-4 rounded-full row-span-1">
-              <img src={icon_support} alt="" className="m-2 w-24" />              
-            </div>
-            <h3 className="text-4xl font-semibold p-4">На связи 24/7</h3>
-            <p className="text-cyan-600 text-xl">Сотрудники нашего сервисного центра всегда готовы помочь вам и ответить на любые вопросы.  </p>
-          </div>
-        </div>
+                  <div className="mb-8">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                        Наши товары
+                    </h1>
+                    {!user && (
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+                            <p className="text-blue-800">
+                                👋 Войдите в аккаунт, чтобы добавлять товары в корзину
+                            </p>
+                        </div>
+                    )}
+                </div>
+                
+                {loading ? (
+                    <div className="flex justify-center items-center h-64">
+                        <div className="text-center">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mx-auto mb-4"></div>
+                            <p className="text-gray-600">Загрузка товаров...</p>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="bg-white/70 rounded-3xl p-5 mt-8 grid grid-cols-10 gap-5">
+                        {products.map(product => (
+                            <SoapProductCard key={product.id} product={product} />
+                        ))}
+                    </div>
+                )}
       </section>
 {/* Отзывы */}
-      <section className="max-w-[1400px] mx-auto py-16 " id="reviews">
+      <section className="max-w-[1280px] mx-auto py-16 " id="reviews">
         <h2 className="text-center font-serif text-6xl">Отзывы наших заказчиков</h2>
         <div className="grid grid-cols-3 gap-5 mt-8">
           <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3">
@@ -368,7 +196,7 @@ const HomePage = () => {
         </div>
       </section>
 {/* Форма подписки */}
-      <section className="max-w-[1400px] mx-auto py-32 ">
+      <section className="max-w-[1280x] mx-auto py-32 ">
         <div className="relative">
           <img src={bubble} alt="" className="absolute w-52 opacity-70 top-4 left-8" />
           <img src={bubble} alt="" className="absolute w-24 right-24 opacity-70 -top-4" />
@@ -387,7 +215,13 @@ const HomePage = () => {
       </section>
 {/* Подвал */}
       <Footer/>
-    </div>
-  )
-}
-export default HomePage
+
+
+            </div>
+
+            {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+        </div>
+    );
+};
+
+export default HomePage;
