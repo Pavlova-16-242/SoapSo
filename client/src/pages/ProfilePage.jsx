@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { Navigate } from 'react-router-dom';
-import EditProfileModal from '../components/EditProfileModal.js';
-import ChangePasswordModal from '../components/ChangePasswordModal.js';
+import EditProfileModal from '../components/EditProfileModal';
+import ChangePasswordModal from '../components/ChangePasswordModal';
 import { authAPI } from '../services/api.js';
 import Header from "../components/Header.jsx"
 import UpButton from "../components/UpButton.jsx"
