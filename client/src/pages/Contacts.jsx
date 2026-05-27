@@ -1,7 +1,7 @@
 import React from "react"
-import Header from "../components2/Header.jsx"
-import UpButton from "../components2/UpButton.js"
-import Footer from "../components2/Footer.jsx"
+import Header from "../components/Header.jsx"
+import UpButton from "../components/UpButton.jsx"
+import Footer from "../components/Footer.jsx"
 
 const Contacts = () => {
   return (

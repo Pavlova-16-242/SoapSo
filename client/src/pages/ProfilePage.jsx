@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { Navigate } from 'react-router-dom';
-import EditProfileModal from '../components2/EditProfileModal.js';
-import ChangePasswordModal from '../components2/ChangePasswordModal.js';
+import EditProfileModal from '../components/EditProfileModal.js';
+import ChangePasswordModal from '../components/ChangePasswordModal.js';
 import { authAPI } from '../services/api.js';
-import Header from "../components2/Header.jsx"
-import UpButton from "../components2/UpButton.js"
-import Footer from "../components2/Footer.jsx"
+import Header from "../components/Header.jsx"
+import UpButton from "../components/UpButton.jsx"
+import Footer from "../components/Footer.jsx"
 
 
 const ProfilePage = () => {
