@@ -29,7 +29,7 @@ import user_natalia from "../assets/image/users/natalia.webp"
 import user_kristina from "../assets/image/users/kristina.webp"
 
 
-const Home = () => {
+const HomePage = () => {
     
     const { user } = useAuth();
     const [showAuthModal, setShowAuthModal] = useState(false);
@@ -249,4 +249,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default HomePage;
