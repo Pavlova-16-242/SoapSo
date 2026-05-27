@@ -18,7 +18,7 @@ const CartPage = () => {
 
     useEffect(() => {
         loadCart();
-    }, []);
+    }, );
 
     const loadCart = async () => {
         try {

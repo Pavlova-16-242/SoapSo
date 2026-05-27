@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useCart } from '../context/CartContext';
+// import { useCart } from '../context/CartContext';
 import { productsAPI } from '../services/api';
 import SimpleProductCard from '../components/SimpleProductCard';
 import Header from "../components/Header.jsx"
 import UpButton from "../components/UpButton.jsx"
 import Footer from "../components/Footer.jsx"
 const Catalogue = () => {
-    const { user, logout } = useAuth();
-    const { totalQuantity } = useCart();
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('default');
-    const navigate = useNavigate();
 
     useEffect(() => {
         fetchProducts();
@@ -63,13 +58,13 @@ const Catalogue = () => {
         setFilteredProducts(result);
     }, [searchTerm, sortBy, products]);
 
-    const handleProfileClick = () => {
-        if (user) {
-            navigate('/profile');
-        } else {
-            navigate('/');
-        }
-    };
+    // const handleProfileClick = () => {
+    //     if (user) {
+    //         navigate('/profile');
+    //     } else {
+    //         navigate('/');
+    //     }
+    // };
 
     return (
         <div className="min-h-screen ">

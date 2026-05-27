@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useCart } from '../context/CartContext';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import EditProfileModal from '../components/EditProfileModal';
 import ChangePasswordModal from '../components/ChangePasswordModal';
 import { authAPI } from '../services/api';
+import Header from "../components/Header.jsx"
+import UpButton from "../components/UpButton.jsx"
+import Footer from "../components/Footer.jsx"
 
 
 const ProfilePage = () => {
-    const { user, logout, checkAuth, isAuthChecked } = useAuth();
-    const { totalQuantity } = useCart();
+    const { user, checkAuth } = useAuth();
     const [showEditModal, setShowEditModal] = useState(false);
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [pageLoading, setPageLoading] = useState(true);
     const [profileData, setProfileData] = useState(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const loadProfile = async () => {
@@ -58,7 +58,8 @@ const ProfilePage = () => {
         <div className="min-h-screen bg-gray-100">
 
             {/* Навигация */}
-
+            <Header/>
+            <UpButton/>
             {/* Профиль */}
             <div className="max-w-3xl mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow">
@@ -116,6 +117,7 @@ const ProfilePage = () => {
             {showPasswordModal && (
                 <ChangePasswordModal onClose={() => setShowPasswordModal(false)} />
             )}
+                  <Footer/>
         </div>
     );
 };

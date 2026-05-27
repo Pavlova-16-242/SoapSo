@@ -1,11 +1,8 @@
 // Библиотеки
 import React, { useState, useEffect } from "react"
 import { useAuth } from '../context/AuthContext'
-import { useCart } from '../context/CartContext'
 import { useNavigate } from 'react-router-dom'
 import { productsAPI } from '../services/api'
-
-
 // Модули
 import Header from "../components/Header.jsx"
 import UpButton from "../components/UpButton.jsx"
@@ -13,8 +10,6 @@ import Footer from "../components/Footer.jsx"
 import AuthModal from '../components/AuthModal'
 import SoapProductCard from '../components/SoapProductCard';
 // Изображения:Иконки
-import icon_bag_w from "../assets/icon/bag-w.webp"
-import icon_bag_w_hover from "../assets/icon/bag-w-hover.webp"
 import icon_delivery from "../assets/icon/delivery.webp"
 import icon_eco from "../assets/icon/eco.webp"
 import icon_check from "../assets/icon/check.webp"
@@ -27,18 +22,7 @@ import hero from "../assets/image/hero.webp"
 import bubble from "../assets/image/bubble.webp"
 import shell from "../assets/image/shell.webp"
 // Изображения:Карточки
-import card_sea from "../assets/image/catalogue/sea.webp"
-import card_milk from "../assets/image/catalogue/milk.webp"
-import card_lavender from "../assets/image/catalogue/lavender.webp"
-import card_mint from "../assets/image/catalogue/mint.webp"
-import card_coal from "../assets/image/catalogue/coal.webp"
-import card_citrus from "../assets/image/catalogue/citrus.webp"
-import card_pink from "../assets/image/catalogue/pink.webp"
-import card_coconut from "../assets/image/catalogue/coconut.webp"
-import card_pine from "../assets/image/catalogue/pine.webp"
-import card_honey from "../assets/image/catalogue/honey.webp"
-import card_flower from "../assets/image/catalogue/flower.webp"
-import card_mix from "../assets/image/catalogue/mix-long.webp"
+
 // Изображения:Пользователи
 import user_anastasia from "../assets/image/users/anastasia.webp"
 import user_natalia from "../assets/image/users/natalia.webp"
@@ -132,6 +116,47 @@ const HomePage = () => {
                     </div>
                 )}
       </section>
+{/* Факты о компании */}
+      <section className="max-w-[1280px] mx-auto py-16 " id="about">
+        <h2 className="text-center font-serif text-6xl">Почему выбирают нас</h2>
+        <div className="text-center bg-white/50 rounded-3xl p-12 mt-8 grid grid-cols-5 gap-5">
+          <div className="place-items-center grid grid-rows-2">
+            <div className="bg-white p-4 rounded-full row-span-1">
+              <img src={icon_delivery} alt="" className="m-2 w-24" />              
+            </div>
+            <h3 className="text-4xl font-semibold p-4">Доставка</h3>
+            <p className="text-cyan-600 text-xl">Мы гарантируем быструю и бережную доставку по всей стране и за ее пределами.</p>
+          </div>
+          <div className="place-items-center grid grid-rows-2">
+            <div className="bg-white p-4 rounded-full row-span-1">
+              <img src={icon_check} alt="" className="m-2 w-24" />              
+            </div>
+            <h3 className="text-4xl font-semibold p-4">Сертификат качества</h3>
+            <p className="text-cyan-600 text-xl">Наша продукция регулярно проходит проверки качества и получает номинации в конкурсах.</p>
+          </div>
+          <div className="place-items-center grid grid-rows-2">
+            <div className="bg-white p-4 rounded-full row-span-1">
+              <img src={icon_eco} alt="" className="m-2 w-24" />              
+            </div>
+            <h3 className="text-4xl font-semibold p-4">Состав</h3>
+            <p className="text-cyan-600 text-xl">Мы используем только натуральные материалы и экологичный сотав, не наносящий вреда природе.</p>
+          </div>
+          <div className="place-items-center grid grid-rows-2">
+            <div className="bg-white p-4 rounded-full row-span-1">
+              <img src={icon_gift} alt="" className="m-2 w-24" />              
+            </div>
+            <h3 className="text-4xl font-semibold p-4">Идеальный подарок</h3>
+            <p className="text-cyan-600 text-xl">Фигурное мыло ручной работы понравится и будет полезно всем, независимо от пола и возраста.</p>
+          </div>
+          <div className="place-items-center grid grid-rows-2">
+            <div className="bg-white p-4 rounded-full row-span-1">
+              <img src={icon_support} alt="" className="m-2 w-24" />              
+            </div>
+            <h3 className="text-4xl font-semibold p-4">На связи 24/7</h3>
+            <p className="text-cyan-600 text-xl">Сотрудники нашего сервисного центра всегда готовы помочь вам и ответить на любые вопросы.  </p>
+          </div>
+        </div>
+      </section>      
 {/* Отзывы */}
       <section className="max-w-[1280px] mx-auto py-16 " id="reviews">
         <h2 className="text-center font-serif text-6xl">Отзывы наших заказчиков</h2>
