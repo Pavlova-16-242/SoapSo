@@ -3,7 +3,7 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 
-import HomePage from './pages/Home.jsx'
+import HomePage from './pages/HomePage'
 import Contacts from './pages/Contacts'
 import Catalogue from './pages/Catalogue'
 import ProfilePage from './pages/ProfilePage'
