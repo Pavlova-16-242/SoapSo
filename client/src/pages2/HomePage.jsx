@@ -4,11 +4,11 @@ import { useAuth } from '../context/AuthContext.jsx'
 import { useNavigate } from 'react-router-dom'
 import { productsAPI } from '../services/api.js'
 // Модули
-import Header from "../components/Header.jsx"
-import UpButton from "../components/UpButton.jsx"
-import Footer from "../components/Footer.jsx"
-import AuthModal from '../components/AuthModal.jsx'
-import SoapProductCard from '../components/SoapProductCard.jsx';
+import Header from "../components2/Header.jsx"
+import UpButton from "../components2/UpButton.js"
+import Footer from "../components2/Footer.jsx"
+import AuthModal from '../components2/AuthModal.jsx'
+import SoapProductCard from '../components2/SoapProductCard.jsx';
 // Изображения:Иконки
 import icon_delivery from "../assets/icon/delivery.webp"
 import icon_eco from "../assets/icon/eco.webp"

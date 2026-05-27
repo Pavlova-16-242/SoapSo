@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 // import { useCart } from '../context/CartContext';
-import { productsAPI } from '../services/api';
-import SimpleProductCard from '../components/SimpleProductCard';
-import Header from "../components/Header.jsx"
-import UpButton from "../components/UpButton.jsx"
-import Footer from "../components/Footer.jsx"
+import { productsAPI } from '../services/api.js';
+import SimpleProductCard from '../components2/SimpleProductCard.jsx';
+import Header from "../components2/Header.jsx"
+import UpButton from "../components2/UpButton.js"
+import Footer from "../components2/Footer.jsx"
 const Catalogue = () => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);

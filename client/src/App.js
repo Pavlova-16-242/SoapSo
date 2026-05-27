@@ -3,12 +3,12 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 
-import HomePage from './pages/HomePage'
-import Contacts from './pages/Contacts'
-import Catalogue from './pages/Catalogue'
-import ProfilePage from './pages/ProfilePage'
-import CartPage from './pages/CartPage'
-import NotFoundPage from './pages/NotFoundPage';
+import HomePage from './pages2/HomePage'
+import Contacts from './pages2/Contacts'
+import Catalogue from './pages2/Catalogue'
+import ProfilePage from './pages2/ProfilePage'
+import CartPage from './pages2/CartPage'
+import NotFoundPage from './pages2/NotFoundPage';
 
 
 function App() {

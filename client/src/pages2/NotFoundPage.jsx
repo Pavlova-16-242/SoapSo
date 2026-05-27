@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from "../components/Header.jsx"
-import Footer from "../components/Footer.jsx"
+import Header from "../components2/Header.jsx"
+import Footer from "../components2/Footer.jsx"
 
 import sorry from "../assets/icon/sorry.webp"
 
