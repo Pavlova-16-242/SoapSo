@@ -1,14 +1,14 @@
 // Библиотеки
 import React, { useState, useEffect } from "react"
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext.jsx'
 import { useNavigate } from 'react-router-dom'
-import { productsAPI } from '../services/api'
+import { productsAPI } from '../services/api.js'
 // Модули
 import Header from "../components/Header.jsx"
 import UpButton from "../components/UpButton.jsx"
 import Footer from "../components/Footer.jsx"
-import AuthModal from '../components/AuthModal'
-import SoapProductCard from '../components/SoapProductCard';
+import AuthModal from '../components/AuthModal.jsx'
+import SoapProductCard from '../components/SoapProductCard.jsx';
 // Изображения:Иконки
 import icon_delivery from "../assets/icon/delivery.webp"
 import icon_eco from "../assets/icon/eco.webp"

@@ -3,7 +3,7 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 
-import HomePage from './pages/HomePage.jsx'
+import Home from './pages/Home'
 import Contacts from './pages/Contacts'
 import Catalogue from './pages/Catalogue'
 import ProfilePage from './pages/ProfilePage'
@@ -18,7 +18,7 @@ function App() {
         <AuthProvider>
           <CartProvider>
           <Routes>
-            <Route path='/' element={<HomePage />}></Route>
+            <Route path='/' element={<Home />}></Route>
             <Route path='/contacts' element={<Contacts/>}></Route>
             <Route path='/catalogue' element={<Catalogue/>}></Route>
             <Route path='/profile' element={<ProfilePage/>}></Route>
