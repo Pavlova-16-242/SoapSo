@@ -11,6 +11,6 @@ services:
       - key: ENVIRONMENT
         value: production
       - key: SECRET_KEY
-        value: твой-секретный-ключ
+        value: 123
       - key: ALLOWED_HOSTS
         value: .onrender.com,soapso.netlify.app
