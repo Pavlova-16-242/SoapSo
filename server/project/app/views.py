@@ -12,6 +12,8 @@ from django.shortcuts import get_object_or_404
 from .serializers import *
 from .models import *
 
+@method_decorator(csrf_exempt, name='dispatch')
+    
 class CsrfTokenView(APIView):
     permission_classes = [AllowAny]
     

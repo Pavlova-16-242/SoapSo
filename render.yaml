@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: soapso-server
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+    startCommand: gunicorn project.wsgi:application
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: SECRET_KEY
+        value: твой-секретный-ключ
+      - key: ALLOWED_HOSTS
+        value: .onrender.com,soapso.netlify.app
