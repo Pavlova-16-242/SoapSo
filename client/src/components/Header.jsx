@@ -31,24 +31,27 @@ const Header = () => {
         customNavigate('/');
     };
 
-    const handleCartClick = () => {
-        if (user) {
-            customNavigate('/cart');
-        } else {
-            setIsOpenAuth(true);
-        }
-    };
 
     const handleProfileClick = async () => {
         if (user) {
             customNavigate('/profile');
         } else {
+            // Проверяем авторизацию (на случай если сессия есть, но состояние сброшено)
             const userData = await checkAuth();
             if (userData) {
                 customNavigate('/profile');
             } else {
                 setIsOpenAuth(true);
             }
+        }
+    };
+
+    const handleCartClick = () => {
+        if (user) {
+            customNavigate('/cart');
+        } else {
+            // Для корзины сразу показываем авторизацию
+            setIsOpenAuth(true);
         }
     };
 

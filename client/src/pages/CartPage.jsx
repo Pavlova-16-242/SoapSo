@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { cartAPI } from '../services/api';
+import { cartAPI, orderAPI } from '../services/api';
 
 const CartPage = () => {
     const { user, checkAuth, logout } = useAuth();
@@ -18,7 +18,8 @@ const CartPage = () => {
 
     useEffect(() => {
         loadCart();
-    }, );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const loadCart = async () => {
         try {
@@ -79,21 +80,29 @@ const CartPage = () => {
         }
     };
 
-    const handleCheckout = async () => {
-        setProcessing(true);
+const handleCheckout = async () => {
+    setProcessing(true);
+    
+    try {
+        // Создаем реальный заказ
+        const response = await orderAPI.createOrder();
+        console.log('Order created:', response.data);
+        
+        setShowSuccess(true);
+        await fetchCart(); // Обновляем корзину в контексте
         
         setTimeout(() => {
-            setShowSuccess(true);
-            setProcessing(false);
-            
-            setTimeout(async () => {
-                await cartAPI.clearCart();
-                await fetchCart();
-                setShowSuccess(false);
-                navigate('/');
-            }, 2000);
-        }, 1500);
-    };
+            setShowSuccess(false);
+            navigate('/profile?tab=orders'); // Переходим в профиль на вкладку заказов
+        }, 2000);
+    } catch (error) {
+        console.error('Error creating order:', error);
+        alert('Ошибка при создании заказа');
+    } finally {
+        setProcessing(false);
+    }
+};
+
 
     const handleImageError = (itemId) => {
         setImageErrors(prev => ({ ...prev, [itemId]: true }));

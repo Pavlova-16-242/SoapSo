@@ -24,8 +24,8 @@ class Command(BaseCommand):
                 'name': 'Морская свежесть',
                 'description': 'с морской солью и водорослями',
                 'price': 450.00,
-                'size': 'col-span-5 row-span-1', 
-                'layout': 'horizontal', 
+                'size': 'col-span-5 row-span-1',  # Размер в сетке
+                'layout': 'horizontal',  # Тип расположения
             },
             {
                 'image': 'products/milk.webp',
@@ -116,7 +116,7 @@ class Command(BaseCommand):
                 'layout': 'horizontal',
             },
         ]
-        
+                
         for product_data in products_data:
             # Проверяем изображение
             image_path = os.path.join(settings.BASE_DIR, 'static', product_data['image'])

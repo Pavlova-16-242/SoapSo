@@ -1,23 +1,45 @@
-import React, { createContext, useState, useContext, useCallback } from 'react';
+import React, { createContext, useState, useContext, useCallback, useEffect } from 'react';
 import { authAPI } from '../services/api';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true); // Начинаем с true для первоначальной загрузки
     const [isAuthChecked, setIsAuthChecked] = useState(false);
 
-    // Проверка авторизации через специальный эндпоинт
+    // Проверяем авторизацию при первой загрузке
+    useEffect(() => {
+        const initAuth = async () => {
+            setLoading(true);
+            try {
+                const response = await authAPI.checkAuth();
+                
+                if (response.data.is_authenticated) {
+                    setUser(response.data.user);
+                } else {
+                    setUser(null);
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                setUser(null);
+            } finally {
+                setIsAuthChecked(true);
+                setLoading(false);
+            }
+        };
+
+        initAuth();
+    }, []); // Выполняется только при монтировании компонента
+
     const checkAuth = useCallback(async () => {
-        // Если уже проверяли и пользователь авторизован, не проверяем снова
+        // Если уже проверяли и пользователь авторизован, возвращаем его
         if (isAuthChecked && user) {
             return user;
         }
 
         setLoading(true);
         try {
-            // Используем check-auth вместо profile для проверки
             const response = await authAPI.checkAuth();
             
             if (response.data.is_authenticated) {
@@ -30,7 +52,6 @@ export const AuthProvider = ({ children }) => {
                 return null;
             }
         } catch (error) {
-            // Даже при ошибке считаем что проверили
             setUser(null);
             setIsAuthChecked(true);
             return null;

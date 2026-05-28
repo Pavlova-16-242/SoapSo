@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from rest_framework.authentication import SessionAuthentication
 from django.middleware.csrf import get_token
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -154,12 +155,13 @@ class UserProfileView(APIView):
         return Response(user_data)
     
 class CheckAuthView(APIView):
-
+    """
+    Проверка авторизации без ошибок
+    """
     permission_classes = [AllowAny]
-    authentication_classes = []  # Отключаем автоматическую аутентификацию
+    authentication_classes = [SessionAuthentication]  # Явно указываем аутентификацию
     
     def get(self, request):
-        # Проверяем авторизацию вручную
         if request.user.is_authenticated:
             return Response({
                 "is_authenticated": True,
@@ -411,3 +413,67 @@ class TestMediaView(APIView):
         }
         
         return Response(data)
+    
+class CreateOrderView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        # Получаем корзину пользователя
+        cart_items = CartItem.objects.filter(user=request.user).select_related('product')
+        
+        if not cart_items.exists():
+            return Response(
+                {'error': 'Корзина пуста'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Создаем заказ
+        total_price = sum(item.total_price for item in cart_items)
+        total_quantity = sum(item.quantity for item in cart_items)
+        
+        order = Order.objects.create(
+            user=request.user,
+            status='processing',
+            total_price=total_price,
+            total_quantity=total_quantity
+        )
+        
+        # Создаем позиции заказа
+        for cart_item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                product=cart_item.product,
+                quantity=cart_item.quantity,
+                price=cart_item.product.price  # Фиксируем цену на момент заказа
+            )
+        
+        # Очищаем корзину
+        cart_items.delete()
+        
+        # Возвращаем созданный заказ
+        serializer = OrderSerializer(order, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class OrderListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = OrderSerializer
+    
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user).prefetch_related('items__product')
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
+
+class OrderDetailView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = OrderSerializer
+    
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user).prefetch_related('items__product')
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context

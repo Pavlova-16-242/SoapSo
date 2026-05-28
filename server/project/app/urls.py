@@ -12,15 +12,16 @@ urlpatterns = [
     path('api/profile/', views.UserProfileView.as_view(), name='profile'),
     path('api/profile/update/', views.UpdateProfileView.as_view(), name='profile-update'),
     path('api/profile/change-password/', views.ChangePasswordView.as_view(), name='change-password'),
-    
     # Товары
     path('api/products/', views.ProductListView.as_view(), name='product-list'),
     path('api/products/<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'),
     path('api/test-media/', views.TestMediaView.as_view(), name='test-media'),
-    
     # Корзина
     path('api/cart/', views.CartView.as_view(), name='cart'),
     path('api/cart/count/', views.CartCountView.as_view(), name='cart-count'),
     path('api/cart/<int:item_id>/', views.CartItemView.as_view(), name='cart-item'),
+    # Заказы
+    path('api/orders/', views.OrderListView.as_view(), name='order-list'),
+    path('api/orders/create/', views.CreateOrderView.as_view(), name='order-create'),
+    path('api/orders/<int:pk>/', views.OrderDetailView.as_view(), name='order-detail'),
 ]
-

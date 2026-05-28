@@ -23,22 +23,21 @@ const api = axios.create({
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',  // Добавляем этот заголовок
     }
 });
 
 // Флаг для отслеживания запроса CSRF
 let csrfPromise = null;
 
-// Функция для получения свежего CSRF-токена
 const refreshCsrfToken = async () => {
     if (csrfPromise) {
         return csrfPromise;
     }
     
     csrfPromise = api.get('csrf/')
-        .catch(() => {
-            // Игнорируем ошибки
-        })
+        .catch(() => {})
         .finally(() => {
             csrfPromise = null;
         });
@@ -49,7 +48,7 @@ const refreshCsrfToken = async () => {
 // Интерцептор для запросов
 api.interceptors.request.use(
     async (config) => {
-        // Для POST/PUT/PATCH/DELETE запросов обновляем CSRF-токен
+        // Для мутирующих запросов обновляем CSRF-токен
         if (['post', 'put', 'patch', 'delete'].includes(config.method)) {
             await refreshCsrfToken();
         }
@@ -91,7 +90,7 @@ api.interceptors.response.use(
             const status = error.response.status;
             const url = error.config.url;
             
-            // Эти ошибки абсолютно нормальны и не должны логироваться
+            // Ожидаемые ошибки авторизации
             const silentErrors = [
                 { status: 401, url: '/profile/' },
                 { status: 403, url: '/profile/' },
@@ -118,7 +117,7 @@ api.interceptors.response.use(
 
 export const authAPI = {
     getCsrf: () => api.get('csrf/'),
-    checkAuth: () => api.get('check-auth/'),  // Новый метод для проверки
+    checkAuth: () => api.get('check-auth/'),
     register: (userData) => api.post('register/', userData),
     login: (credentials) => api.post('login/', credentials),
     logout: () => api.post('logout/'),
@@ -126,9 +125,6 @@ export const authAPI = {
     updateProfile: (userData) => api.patch('profile/update/', userData),
     changePassword: (passwordData) => api.put('profile/change-password/', passwordData),
 };
-
-
-export default api;
 
 export const productsAPI = {
     getProducts: () => api.get('products/'),
@@ -144,8 +140,10 @@ export const cartAPI = {
     getCartCount: () => api.get('cart/count/'),
 };
 
+export default api;
+
 export const orderAPI = {
-    createOrder: () => api.post('orders/'),
+    createOrder: () => api.post('orders/create/'),
     getOrders: () => api.get('orders/'),
     getOrder: (id) => api.get(`orders/${id}/`),
 };

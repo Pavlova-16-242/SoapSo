@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useCallback, useEffect } from 'react';
+import React, { createContext, useState, useContext, useCallback, useEffect, useRef } from 'react';
 import { cartAPI } from '../services/api';
 import { useAuth } from './AuthContext';
 
@@ -11,6 +11,10 @@ export const CartProvider = ({ children }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading] = useState(false);
     const { user, isAuthChecked } = useAuth();
+    
+    // Используем ref для отслеживания загрузки
+    const isInitialLoad = useRef(true);
+    const prevUser = useRef(null);
 
     const fetchCart = useCallback(async () => {
         if (!user) {
@@ -35,9 +39,13 @@ export const CartProvider = ({ children }) => {
         }
     }, [user]);
 
-    // Загружаем корзину при авторизации
+    // Загружаем корзину только при изменении пользователя
     useEffect(() => {
-        if (isAuthChecked && user) {
+        // Проверяем, изменился ли пользователь
+        const userChanged = prevUser.current !== user;
+        prevUser.current = user;
+
+        if (isAuthChecked && user && userChanged) {
             fetchCart();
         } else if (isAuthChecked && !user) {
             setCartItems([]);
@@ -45,6 +53,8 @@ export const CartProvider = ({ children }) => {
             setTotalQuantity(0);
             setTotalPrice(0);
         }
+        
+        isInitialLoad.current = false;
     }, [user, isAuthChecked, fetchCart]);
 
     const addToCart = async (productId, quantity = 1) => {
@@ -70,7 +80,7 @@ export const CartProvider = ({ children }) => {
             } else {
                 await cartAPI.updateCartItem(itemId, quantity);
             }
-            await fetchCart(); // Перезагружаем корзину
+            await fetchCart();
         } catch (error) {
             console.error('Error updating cart item:', error);
         }
@@ -86,6 +96,18 @@ export const CartProvider = ({ children }) => {
         return item ? item.id : null;
     };
 
+    const clearCart = async () => {
+        try {
+            await cartAPI.clearCart();
+            setCartItems([]);
+            setCartCount(0);
+            setTotalQuantity(0);
+            setTotalPrice(0);
+        } catch (error) {
+            console.error('Error clearing cart:', error);
+        }
+    };
+
     return (
         <CartContext.Provider value={{
             cartItems,
@@ -97,7 +119,8 @@ export const CartProvider = ({ children }) => {
             updateCartItem,
             getCartItemQuantity,
             getCartItemId,
-            fetchCart
+            fetchCart,
+            clearCart,
         }}>
             {children}
         </CartContext.Provider>

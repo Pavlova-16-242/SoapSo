@@ -109,3 +109,31 @@ class AddToCartSerializer(serializers.Serializer):
 
 class UpdateCartItemSerializer(serializers.Serializer):
     quantity = serializers.IntegerField(min_value=0)
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    product_image = serializers.SerializerMethodField()
+    product_name = serializers.CharField(source='product.name', read_only=True)
+    
+    class Meta:
+        model = OrderItem
+        fields = ['id', 'product_id', 'product_name', 'product_image', 'quantity', 'price', 'total_price']
+    
+    def get_product_image(self, obj):
+        if obj.product.image:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(f'/static/{obj.product.image}')
+            return f'/static/{obj.product.image}'
+        return None
+
+class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True, read_only=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    
+    class Meta:
+        model = Order
+        fields = ['id', 'status', 'status_display', 'total_price', 'total_quantity', 
+                  'items', 'created_at', 'updated_at']
+
+class CreateOrderSerializer(serializers.Serializer):
+    pass  # Заказ создается из корзины автоматически
