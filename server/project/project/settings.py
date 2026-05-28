@@ -151,19 +151,65 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-CSRF_COOKIE_HTTPONLY = False  
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     'http://127.0.0.1:8000',
     "https://soapso.netlify.app",
 ]
-CSRF_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False 
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Хранение сессий в БД
-SESSION_COOKIE_AGE = 1209600  # 2 недели (в секундах)
-SESSION_SAVE_EVERY_REQUEST = True  # Обновлять сессию при каждом запросе
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Не удалять сессию при закрытии браузера
 
-# Разрешаем все методы
+ENVIRONMENT = os.environ.get('ENVIRONMENT', 'development')
+
+if ENVIRONMENT == 'production':
+    DEBUG = False
+    ALLOWED_HOSTS = [
+        'soapso.onrender.com',  # URL Render
+        'soapso.netlify.app',  # URL Netlify
+        'localhost',
+        '127.0.0.1',
+    ]
+    
+    CSRF_TRUSTED_ORIGINS = [
+        'https://soapso.netlify.app',
+        'https://soapso.onrender.com',
+    ]
+    
+    CORS_ALLOWED_ORIGINS = [
+        'https://soapso.netlify.app',
+        'https://soapso.onrender.com',
+    ]
+    
+    # Настройки безопасности
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SAMESITE = 'None'
+    SESSION_COOKIE_SAMESITE = 'None'
+    
+    # Статические файлы
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    
+    CSRF_TRUSTED_ORIGINS = [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+    ]
+    
+    CORS_ALLOWED_ORIGINS = [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+    ]
+    
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SAMESITE = 'Lax'
+
+# Общие настройки
+CSRF_COOKIE_HTTPONLY = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
