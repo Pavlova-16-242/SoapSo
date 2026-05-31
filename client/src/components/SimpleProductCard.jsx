@@ -33,16 +33,8 @@ const SimpleProductCard = ({ product }) => {
         return null;
     };
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('ru-RU', {
-            style: 'currency',
-            currency: 'RUB',
-            minimumFractionDigits: 0
-        }).format(price);
-    };
-
     return (
-        <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+        <div className="bg-white rounded-2xl overflow-hidden duration-300 group">
             {/* Изображение */}
             <div className="relative h-64 bg-gradient-to-br from-cyan-100 to-blue-100 overflow-hidden">
                 {getImageUrl() && !imageError ? (
@@ -50,6 +42,7 @@ const SimpleProductCard = ({ product }) => {
                         src={getImageUrl()} 
                         alt={product.name} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
                         onError={() => setImageError(true)}
                     />
                 ) : (
@@ -61,23 +54,19 @@ const SimpleProductCard = ({ product }) => {
                     </div>
                 )}
                 
-                {/* Бейдж цены */}
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg">
-                    <span className="font-bold text-cyan-600 text-lg">
-                        {formatPrice(product.price)}
-                    </span>
-                </div>
             </div>
 
             {/* Информация */}
             <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                <h3 className="text-2xl font-bold text-cyan-900 mb-2">
                     {product.name}
                 </h3>
-                <p className="text-gray-600 text-lg mb-6">
+                <p className="text-cyan-600 text-lg mb-2">
                     {product.description}
                 </p>
-
+                <span className="font-bold text-cyan-900 text-3xl">
+                    {product.price} Р
+                </span>
                 {/* Кнопка корзины */}
                 <div className="relative">
                     {showAuthMessage && (
@@ -87,7 +76,7 @@ const SimpleProductCard = ({ product }) => {
                     )}
                     
                     {currentQuantity > 0 ? (
-                        <div className="flex items-center justify-between bg-cyan-50 rounded-xl p-3">
+                        <div className="flex items-center justify-between bg-cyan-600/50 rounded-xl p-3">
                             <button
                                 onClick={() => handleQuantityChange(currentQuantity - 1)}
                                 className="w-10 h-10 flex items-center justify-center bg-white rounded-lg hover:bg-gray-100 transition-colors text-xl font-bold text-cyan-600"
@@ -95,7 +84,7 @@ const SimpleProductCard = ({ product }) => {
                                 −
                             </button>
                             
-                            <span className="text-xl font-bold text-cyan-600">
+                            <span className="text-xl font-bold text-white">
                                 {currentQuantity}
                             </span>
                             

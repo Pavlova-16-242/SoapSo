@@ -11,6 +11,8 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404
 from .serializers import *
 from .models import *
+from django.contrib.sessions.backends.db import SessionStore
+from django.contrib.sessions.models import Session
 
 @method_decorator(csrf_exempt, name='dispatch')
     
@@ -72,22 +74,21 @@ class LoginView(APIView):
         )
 
 class LogoutView(APIView):
-    permission_classes = [AllowAny]  # Разрешаем доступ всем
+    permission_classes = [AllowAny]
     
     def post(self, request):
-        # Очищаем сессию в любом случае
-        if request.user.is_authenticated:
+        try:
             logout(request)
-        
-        # Создаем новую сессию и CSRF-токен
-        request.session.create()
-        get_token(request)
+            # Очищаем сессию полностью
+            request.session.flush()
+        except Exception:
+            pass
         
         return Response({
             "message": "Выход выполнен",
-            "detail": "Session cleared and new CSRF token generated"
+            "detail": "Session cleared"
         })
-
+    
 class UpdateProfileView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UpdateProfileSerializer
@@ -120,11 +121,11 @@ class ChangePasswordView(generics.UpdateAPIView):
         serializer.is_valid(raise_exception=True)
         
         user = request.user
-        # Меняем пароль
+
         user.set_password(serializer.validated_data['new_password'])
         user.save()
         
-        # Важно: обновляем сессию, чтобы пользователь не вышел
+
         update_session_auth_hash(request, user)
         
         return Response({
@@ -137,14 +138,12 @@ class UserProfileView(APIView):
     def get(self, request):
         user = request.user
         
-        # Базовые поля, которые точно есть
         user_data = {
             "id": user.id,
             "username": user.username,
             "email": user.email,
         }
-        
-        # Добавляем необязательные поля
+
         if hasattr(user, 'phone') and user.phone:
             user_data['phone'] = user.phone
             
@@ -158,26 +157,57 @@ class UserProfileView(APIView):
     
 class CheckAuthView(APIView):
     """
-    Проверка авторизации без ошибок
+    Проверка авторизации - всегда возвращает 200 OK
     """
     permission_classes = [AllowAny]
-    authentication_classes = [SessionAuthentication]  # Явно указываем аутентификацию
+    authentication_classes = []  # Отключаем автоматическую аутентификацию
     
     def get(self, request):
-        if request.user.is_authenticated:
+        # Безопасно проверяем сессию
+        try:
+            # Проверяем есть ли сессия и валидна ли она
+            session_key = request.session.session_key
+            
+            if session_key:
+                try:
+                    # Пробуем загрузить сессию
+                    session = Session.objects.get(session_key=session_key)
+                    session_data = session.get_decoded()
+                    
+                    # Проверяем аутентификацию через сессию
+                    from django.contrib.auth import get_user_model
+                    User = get_user_model()
+                    
+                    user_id = session_data.get('_auth_user_id')
+                    if user_id:
+                        try:
+                            user = User.objects.get(id=user_id)
+                            return Response({
+                                "is_authenticated": True,
+                                "user": {
+                                    "id": user.id,
+                                    "username": user.username,
+                                    "email": user.email,
+                                }
+                            })
+                        except User.DoesNotExist:
+                            pass
+                except Session.DoesNotExist:
+                    pass
+                except Exception:
+                    # Сессия повреждена - создаем новую
+                    request.session.flush()
+            
             return Response({
-                "is_authenticated": True,
-                "user": {
-                    "id": request.user.id,
-                    "username": request.user.username,
-                    "email": request.user.email,
-                }
+                "is_authenticated": False,
+                "user": None
             })
-        return Response({
-            "is_authenticated": False,
-            "user": None
-        })
-
+            
+        except Exception:
+            return Response({
+                "is_authenticated": False,
+                "user": None
+            })
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
     
@@ -220,7 +250,12 @@ class CartView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
-        """Получить содержимое корзины"""
+        # Проверяем что пользователь авторизован
+        if not request.user.is_authenticated:
+            return Response(
+                {'error': 'Authentication required'}, 
+                status=status.HTTP_401_UNAUTHORIZED
+            )
         cart_items = CartItem.objects.filter(user=request.user)
         serializer = CartItemSerializer(cart_items, many=True)
         
@@ -234,7 +269,6 @@ class CartView(APIView):
         })
     
     def post(self, request):
-        """Добавить товар в корзину"""
         serializer = AddToCartSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
@@ -243,7 +277,6 @@ class CartView(APIView):
         
         product = get_object_or_404(Product, id=product_id, available=True)
         
-        # Получаем или создаем элемент корзины
         cart_item, created = CartItem.objects.get_or_create(
             user=request.user,
             product=product,
@@ -251,18 +284,15 @@ class CartView(APIView):
         )
         
         if not created:
-            # Если товар уже есть, увеличиваем количество
             cart_item.quantity += quantity
             cart_item.save()
         
-        # Возвращаем обновленную корзину
         return self.get(request)
 
 class CartItemView(APIView):
     permission_classes = [IsAuthenticated]
     
     def put(self, request, item_id):
-        """Обновить количество товара в корзине"""
         cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
         serializer = UpdateCartItemSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -279,7 +309,6 @@ class CartItemView(APIView):
         return Response(CartItemSerializer(cart_item).data)
     
     def delete(self, request, item_id):
-        """Удалить товар из корзины"""
         cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
         cart_item.delete()
         return Response({'message': 'Товар удален из корзины'})
@@ -288,7 +317,6 @@ class CartCountView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
-        """Получить количество товаров в корзине"""
         count = CartItem.objects.filter(user=request.user).count()
         total_quantity = sum(
             item.quantity for item in CartItem.objects.filter(user=request.user)
@@ -320,7 +348,6 @@ class CartView(APIView):
         })
     
     def post(self, request):
-        """Добавить товар в корзину"""
         serializer = AddToCartSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
@@ -342,7 +369,6 @@ class CartView(APIView):
         return self.get(request)
     
     def delete(self, request):
-        """Очистить всю корзину"""
         CartItem.objects.filter(user=request.user).delete()
         return Response({
             'message': 'Корзина очищена',
@@ -352,7 +378,6 @@ class CartView(APIView):
         })
     
     def post(self, request):
-        """Добавить товар в корзину"""
         serializer = AddToCartSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
@@ -374,7 +399,6 @@ class CartView(APIView):
         return self.get(request)
     
     def delete(self, request):
-        """Очистить всю корзину"""
         CartItem.objects.filter(user=request.user).delete()
         return Response({
             'message': 'Корзина очищена',
@@ -420,7 +444,6 @@ class CreateOrderView(APIView):
     permission_classes = [IsAuthenticated]
     
     def post(self, request):
-        # Получаем корзину пользователя
         cart_items = CartItem.objects.filter(user=request.user).select_related('product')
         
         if not cart_items.exists():
@@ -428,8 +451,7 @@ class CreateOrderView(APIView):
                 {'error': 'Корзина пуста'}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
-        # Создаем заказ
+
         total_price = sum(item.total_price for item in cart_items)
         total_quantity = sum(item.quantity for item in cart_items)
         
@@ -439,20 +461,17 @@ class CreateOrderView(APIView):
             total_price=total_price,
             total_quantity=total_quantity
         )
-        
-        # Создаем позиции заказа
+
         for cart_item in cart_items:
             OrderItem.objects.create(
                 order=order,
                 product=cart_item.product,
                 quantity=cart_item.quantity,
-                price=cart_item.product.price  # Фиксируем цену на момент заказа
+                price=cart_item.product.price 
             )
-        
-        # Очищаем корзину
+
         cart_items.delete()
         
-        # Возвращаем созданный заказ
         serializer = OrderSerializer(order, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -479,3 +498,34 @@ class OrderDetailView(generics.RetrieveAPIView):
         context = super().get_serializer_context()
         context['request'] = self.request
         return context
+    
+class DeleteAccountView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self, request):
+        user = request.user
+        password = request.data.get('password')
+        
+        # Проверяем пароль
+        if not password:
+            return Response(
+                {"error": "Пароль обязателен для удаления аккаунта"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        if not user.check_password(password):
+            return Response(
+                {"error": "Неверный пароль"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Удаляем связанные данные
+        CartItem.objects.filter(user=user).delete()
+        Order.objects.filter(user=user).delete()
+        
+        # Удаляем пользователя
+        user.delete()
+        
+        return Response({
+            "message": "Аккаунт успешно удален"
+        }, status=status.HTTP_200_OK)

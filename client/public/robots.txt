@@ -1,3 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
+# client/public/robots.txt
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+Sitemap: https://soapso.netlify.app/sitemap.xml
+
+Host: https://soapso.netlify.app

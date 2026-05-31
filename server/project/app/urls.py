@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/profile/', views.UserProfileView.as_view(), name='profile'),
     path('api/profile/update/', views.UpdateProfileView.as_view(), name='profile-update'),
     path('api/profile/change-password/', views.ChangePasswordView.as_view(), name='change-password'),
+    path('api/profile/delete/', views.DeleteAccountView.as_view(), name='delete-account'),
     # Товары
     path('api/products/', views.ProductListView.as_view(), name='product-list'),
     path('api/products/<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'),

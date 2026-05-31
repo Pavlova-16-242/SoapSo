@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { cartAPI, orderAPI } from '../services/api';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import SEO from '../components/SEO';
 
 const CartPage = () => {
-    const { user, checkAuth, logout } = useAuth();
+    const { user, checkAuth } = useAuth();
     const { fetchCart } = useCart();
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -84,17 +87,12 @@ const handleCheckout = async () => {
     setProcessing(true);
     
     try {
-        // Создаем реальный заказ
         const response = await orderAPI.createOrder();
         console.log('Order created:', response.data);
         
         setShowSuccess(true);
-        await fetchCart(); // Обновляем корзину в контексте
+        await fetchCart();
         
-        setTimeout(() => {
-            setShowSuccess(false);
-            navigate('/profile?tab=orders'); // Переходим в профиль на вкладку заказов
-        }, 2000);
     } catch (error) {
         console.error('Error creating order:', error);
         alert('Ошибка при создании заказа');
@@ -102,7 +100,6 @@ const handleCheckout = async () => {
         setProcessing(false);
     }
 };
-
 
     const handleImageError = (itemId) => {
         setImageErrors(prev => ({ ...prev, [itemId]: true }));
@@ -130,7 +127,7 @@ const handleCheckout = async () => {
         return (
             <div className="flex justify-center items-center min-h-screen">
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mx-auto mb-4"></div>
                     <div className="text-xl">Загрузка корзины...</div>
                 </div>
             </div>
@@ -142,49 +139,18 @@ const handleCheckout = async () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            {/* Навигация */}
-            <nav className="bg-white shadow-lg sticky top-0 z-40">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex justify-between items-center h-16">
-                        <button 
-                            onClick={() => navigate('/')}
-                            className="text-xl font-bold hover:text-blue-600 transition-colors"
-                        >
-                            🛍️ Магазин
-                        </button>
-                        
-                        <div className="flex items-center gap-4">
-                            <button 
-                                onClick={() => navigate('/profile')}
-                                className="p-2 hover:bg-gray-100 rounded transition-colors"
-                            >
-                                <span className="flex items-center gap-2">
-                                    <span className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">
-                                        {user.username.charAt(0).toUpperCase()}
-                                    </span>
-                                    <span className="hidden sm:inline">{user.username}</span>
-                                </span>
-                            </button>
-                            
-                            <button 
-                                onClick={logout}
-                                className="p-2 hover:bg-gray-100 rounded text-red-500 transition-colors"
-                                title="Выйти"
-                            >
-                                <span className="text-xl">🚪</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
+        <div className="">
+        <SEO 
+            title="Корзина"
+            description="Купите натуральное мыло ручной работы: морская свежесть, овсяное молочко, лавандовое облако, мятный бриз и другие ароматы. Доставка по России."
+        />
+            <Header />
             {/* Контент корзины */}
-            <div className="max-w-4xl mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold mb-8">Корзина</h1>
+            <main className="max-w-7xl mx-auto px-4 py-8">
+                <h1 className="font-serif text-6xl">Корзина</h1>
 
                 {showSuccess ? (
-                    <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+                    <div className="bg-white/70 rounded-3xl p-8 text-center my-4">
                         <div className="text-6xl mb-4">🎉</div>
                         <h2 className="text-2xl font-bold text-green-600 mb-4">
                             Заказ успешно оформлен!
@@ -194,13 +160,13 @@ const handleCheckout = async () => {
                         </p>
                         <button
                             onClick={() => navigate('/')}
-                            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                            className="bg-cyan-600 text-white px-6 py-3 rounded-lg hover:bg-cyan-700 transition-colors"
                         >
                             Вернуться в магазин
                         </button>
                     </div>
                 ) : cartItems.length === 0 ? (
-                    <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+                    <div className="bg-white/70 rounded-3xl p-8 text-center my-4">
                         <div className="text-6xl mb-4">🛒</div>
                         <h2 className="text-2xl font-bold text-gray-700 mb-4">
                             Корзина пуста
@@ -209,8 +175,8 @@ const handleCheckout = async () => {
                             Добавьте товары из каталога, чтобы сделать заказ
                         </p>
                         <button
-                            onClick={() => navigate('/')}
-                            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                            onClick={() => navigate('/catalogue')}
+                            className="bg-cyan-600 text-white px-6 py-3 rounded-lg hover:bg-cyan-700 transition-colors"
                         >
                             Перейти к покупкам
                         </button>
@@ -218,7 +184,7 @@ const handleCheckout = async () => {
                 ) : (
                     <div className="space-y-6">
                         {/* Список товаров */}
-                        <div className="bg-white rounded-lg shadow">
+                        <div className="bg-white/70 rounded-3xl">
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <h2 className="text-xl font-bold">
@@ -245,6 +211,7 @@ const handleCheckout = async () => {
                                                         src={getImageUrl(item)}
                                                         alt={item.product.name}
                                                         className="w-full h-full object-cover"
+                                                        loading="lazy"
                                                         onError={() => handleImageError(item.id)}
                                                     />
                                                 ) : (
@@ -301,7 +268,7 @@ const handleCheckout = async () => {
                                                     className="text-red-400 hover:text-red-600 transition-colors p-2 text-xl"
                                                     title="Удалить товар"
                                                 >
-                                                    🗑️
+                                                    x
                                                 </button>
                                             </div>
                                         </div>
@@ -311,7 +278,7 @@ const handleCheckout = async () => {
                         </div>
 
                         {/* Итого и оформление заказа */}
-                        <div className="bg-white rounded-lg shadow p-6">
+                        <div className="bg-white/70 rounded-3xl p-6">
                             <div className="space-y-4">
                                 <div className="flex justify-between items-center text-lg">
                                     <span className="text-gray-600">Товаров в корзине:</span>
@@ -320,8 +287,8 @@ const handleCheckout = async () => {
                                 
                                 <div className="border-t border-gray-200 pt-4">
                                     <div className="flex justify-between items-center text-xl">
-                                        <span className="text-gray-800 font-medium">Итого к оплате:</span>
-                                        <span className="font-bold text-blue-600 text-2xl">
+                                        <span className="text-cyan-900 font-medium">Итого к оплате:</span>
+                                        <span className="font-bold text-cyan-600 text-2xl">
                                             {formatPrice(totalPrice)}
                                         </span>
                                     </div>
@@ -330,7 +297,7 @@ const handleCheckout = async () => {
                                 <button
                                     onClick={handleCheckout}
                                     disabled={processing}
-                                    className="w-full bg-green-600 text-white py-4 px-6 rounded-lg hover:bg-green-700 transition-colors disabled:bg-gray-400 text-lg font-semibold mt-4"
+                                    className="w-full bg-cyan-600 text-white py-4 px-6 rounded-lg hover:bg-cyan-900 transition-colors disabled:bg-gray-400 text-lg font-semibold mt-4"
                                 >
                                     {processing ? (
                                         <span className="flex items-center justify-center gap-3">
@@ -338,14 +305,15 @@ const handleCheckout = async () => {
                                             Обработка заказа...
                                         </span>
                                     ) : (
-                                        '🚀 Оформить заказ'
+                                        'Оформить заказ'
                                     )}
                                 </button>
                             </div>
                         </div>
                     </div>
                 )}
-            </div>
+            </main>
+            <Footer />
         </div>
     );
 };

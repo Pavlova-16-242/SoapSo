@@ -8,7 +8,7 @@ User = get_user_model()
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
-    username = serializers.CharField(required=False, allow_blank=True)  # Делаем необязательным
+    username = serializers.CharField(required=False, allow_blank=True)  
     
     class Meta:
         model = User
@@ -22,7 +22,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('password2')
         
-        # Если username не указан, генерируем его из email
+        
         if not validated_data.get('username'):
             validated_data['username'] = validated_data['email'].split('@')[0]
         
@@ -96,7 +96,7 @@ class ProductSerializer(serializers.ModelSerializer):
         return None
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(read_only=True)  # Важно: используем ProductSerializer
+    product = ProductSerializer(read_only=True) 
     total_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     
     class Meta:
@@ -136,4 +136,4 @@ class OrderSerializer(serializers.ModelSerializer):
                   'items', 'created_at', 'updated_at']
 
 class CreateOrderSerializer(serializers.Serializer):
-    pass  # Заказ создается из корзины автоматически
+    pass 

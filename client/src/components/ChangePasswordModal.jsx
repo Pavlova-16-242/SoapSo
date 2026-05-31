@@ -72,13 +72,13 @@ const ChangePasswordModal = ({ onClose }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-8 max-w-md w-full">
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-8 max-w-md w-full m-2">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold">Изменить пароль</h2>
                     <button 
                         onClick={onClose} 
-                        className="text-gray-500 hover:text-gray-700 text-2xl"
+                        className="text-cyan-600 hover:text-cyan-900 text-5xl"
                     >
                         ×
                     </button>
@@ -98,7 +98,7 @@ const ChangePasswordModal = ({ onClose }) => {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-cyan-600 mb-1">
                             Текущий пароль
                         </label>
                         <input
@@ -106,13 +106,15 @@ const ChangePasswordModal = ({ onClose }) => {
                             name="old_password"
                             value={formData.old_password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
                             required
                         />
+
+                        
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-cyan-600 mb-1">
                             Новый пароль
                         </label>
                         <input
@@ -120,13 +122,13 @@ const ChangePasswordModal = ({ onClose }) => {
                             name="new_password"
                             value={formData.new_password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-cyan-600 mb-1">
                             Повторите новый пароль
                         </label>
                         <input
@@ -134,7 +136,7 @@ const ChangePasswordModal = ({ onClose }) => {
                             name="new_password2"
                             value={formData.new_password2}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
                             required
                         />
                     </div>
@@ -142,7 +144,7 @@ const ChangePasswordModal = ({ onClose }) => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-300"
+                        className="w-full bg-cyan-600 text-white py-2 px-4 rounded-md hover:bg-cyan-700 transition-colors disabled:bg-cyan-300"
                     >
                         {loading ? 'Изменение...' : 'Изменить пароль'}
                     </button>

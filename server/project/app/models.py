@@ -14,7 +14,7 @@ class User(AbstractUser):
     
     def save(self, *args, **kwargs):
         if not self.username:
-            self.username = self.email.split('@')[0]
+            self.username = 'Не указано'
         super().save(*args, **kwargs)
 
 class Product(models.Model):
@@ -76,7 +76,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)  # Цена на момент заказа
+    price = models.DecimalField(max_digits=10, decimal_places=2) 
     
     @property
     def total_price(self):

@@ -2,6 +2,7 @@ services:
   - type: web
     name: soapso-server
     env: python
+    rootDir: server/
     buildCommand: |
       pip install -r requirements.txt
       python manage.py collectstatic --noinput
@@ -11,6 +12,8 @@ services:
       - key: ENVIRONMENT
         value: production
       - key: SECRET_KEY
-        value: 123
+        generateValue: true
       - key: ALLOWED_HOSTS
-        value: .onrender.com,soapso.netlify.app
+        value: .onrender.com,soapso.netlify.app,localhost
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://soapso.netlify.app,http://localhost:3000

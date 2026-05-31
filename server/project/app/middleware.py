@@ -1,4 +1,21 @@
 from django.utils.deprecation import MiddlewareMixin
+from django.contrib.sessions.models import Session
+import logging
+
+logger = logging.getLogger(__name__)
+
+class SessionCleanupMiddleware(MiddlewareMixin):
+    """Очищает поврежденные сессии"""
+    
+    def process_exception(self, request, exception):
+        if 'SessionInterrupted' in str(exception):
+            try:
+                # Очищаем поврежденную сессию
+                request.session.flush()
+            except Exception:
+                pass
+            return None
+        return None
 
 class DebugMiddleware(MiddlewareMixin):
     def process_request(self, request):

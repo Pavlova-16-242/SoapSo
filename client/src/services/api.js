@@ -79,9 +79,11 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         
-        // Если получаем 403 ошибку CSRF и это не повторный запрос
-        if (error.response?.status === 403 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        // Обработка SessionInterrupted
+        if (error.response?.status === 400 && 
+            error.response?.data?.includes?.('SessionInterrupted')) {
+            // Создаем новую сессию через CSRF endpoint
+            await refreshCsrfToken();
             
             // Для запроса логаута - пробуем еще раз с новым токеном
             if (originalRequest.url.includes('/logout/')) {
@@ -90,9 +92,17 @@ api.interceptors.response.use(
                 if (csrfToken) {
                     originalRequest.headers['X-CSRFToken'] = csrfToken;
                 }
-                return api(originalRequest);
+            // Возвращаем что пользователь не авторизован
+            return Promise.resolve({
+                data: {
+                    is_authenticated: false,
+                    user: null,
+                    session_refreshed: true
+                }
+            });
             }
         }
+        
         
         // Тихая обработка ожидаемых ошибок
         if (error.response) {
@@ -105,6 +115,12 @@ api.interceptors.response.use(
                 { status: 403, url: '/profile/' },
                 { status: 401, url: '/check-auth/' },
                 { status: 403, url: '/check-auth/' },
+                { status: 400, url: '/check-auth/' },  // Добавляем 400 для check-auth
+                { status: 401, url: '/orders/' },
+                { status: 403, url: '/orders/' },
+                { status: 401, url: '/cart/' },
+                { status: 403, url: '/cart/' },
+                { status: 400, url: '/cart/' },
             ];
             
             const isSilentError = silentErrors.some(
@@ -133,6 +149,7 @@ export const authAPI = {
     getProfile: () => api.get('profile/'),
     updateProfile: (userData) => api.patch('profile/update/', userData),
     changePassword: (passwordData) => api.put('profile/change-password/', passwordData),
+    deleteAccount: (password) => api.delete('profile/delete/', { data: { password } }),
 };
 
 export const productsAPI = {

@@ -1,5 +1,6 @@
-import React, { createContext, useState, useContext, useCallback, useEffect } from 'react';
+import React, { createContext, useState, useContext, useCallback, useEffect, useRef } from 'react';
 import { authAPI } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext(null);
 
@@ -7,6 +8,8 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true); // Начинаем с true для первоначальной загрузки
     const [isAuthChecked, setIsAuthChecked] = useState(false);
+    const navigate = useNavigate();
+    const isLoggingOut = useRef(false);
 
     // Проверяем авторизацию при первой загрузке
     useEffect(() => {
@@ -32,33 +35,37 @@ export const AuthProvider = ({ children }) => {
         initAuth();
     }, []); // Выполняется только при монтировании компонента
 
-    const checkAuth = useCallback(async () => {
-        // Если уже проверяли и пользователь авторизован, возвращаем его
-        if (isAuthChecked && user) {
-            return user;
-        }
+const checkAuth = useCallback(async () => {
+    if (isLoggingOut.current) return null;
+    
+    if (isAuthChecked && user) {
+        return user;
+    }
 
-        setLoading(true);
-        try {
-            const response = await authAPI.checkAuth();
-            
-            if (response.data.is_authenticated) {
-                setUser(response.data.user);
-                setIsAuthChecked(true);
-                return response.data.user;
-            } else {
-                setUser(null);
-                setIsAuthChecked(true);
-                return null;
-            }
-        } catch (error) {
+    setLoading(true);
+    try {
+        const response = await authAPI.checkAuth();
+        
+        // Проверяем что ответ успешный и пользователь авторизован
+        if (response?.data?.is_authenticated && !isLoggingOut.current) {
+            setUser(response.data.user);
+            setIsAuthChecked(true);
+            return response.data.user;
+        } else {
+            // Пользователь не авторизован (нормальная ситуация)
             setUser(null);
             setIsAuthChecked(true);
             return null;
-        } finally {
-            setLoading(false);
         }
-    }, [isAuthChecked, user]);
+    } catch (error) {
+        // Тихо обрабатываем ошибки проверки авторизации
+        setUser(null);
+        setIsAuthChecked(true);
+        return null;
+    } finally {
+        setLoading(false);
+    }
+}, [isAuthChecked, user]);
 
     const login = async (email, password) => {
         setLoading(true);
@@ -85,13 +92,23 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = async () => {
+        isLoggingOut.current = true;
+        
         setUser(null);
         setIsAuthChecked(false);
+        
         try {
             await authAPI.logout();
         } catch (error) {
             console.log('Logout completed');
         }
+        
+        // Редирект на главную
+        navigate('/');
+        
+        setTimeout(() => {
+            isLoggingOut.current = false;
+        }, 1000);
     };
 
     const updateProfile = async (userData) => {
@@ -115,7 +132,8 @@ export const AuthProvider = ({ children }) => {
             changePassword,
             checkAuth,
             loading,
-            isAuthChecked
+            isAuthChecked,
+            isLoggingOut: isLoggingOut.current
         }}>
             {children}
         </AuthContext.Provider>
