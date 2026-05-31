@@ -6,6 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -46,12 +47,12 @@ AUTH_USER_MODEL = 'app.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':[
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES':[
-        'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ],
 }
 
@@ -114,7 +115,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
@@ -126,24 +126,13 @@ ENVIRONMENT = os.environ.get('ENVIRONMENT', 'development')
 
 if ENVIRONMENT == 'production':
     DEBUG = False
-    ALLOWED_HOSTS_STR = os.environ.get('ALLOWED_HOSTS', '')
-    ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_STR.split(',') if host.strip()]
-    ALLOWED_HOSTS = [
-        'soapso.onrender.com',
-        'soapso.netlify.app',  
-        'localhost',
-        '127.0.0.1',
-    ]
+    ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '.onrender.com').split(',')
     
-    CSRF_TRUSTED_ORIGINS = [
-        'https://soapso.netlify.app',
-        'https://soapso.onrender.com',
-    ]
-    CORS_ORIGINS_STR = os.environ.get('CORS_ALLOWED_ORIGINS', '')
-    CORS_ALLOWED_ORIGINS = [
-        'https://soapso.netlify.app',
-        'https://soapso.onrender.com',
-    ]
+    CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'https://soapso.netlify.app').split(',')
+    CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()
+    
+    # Важно для Render (HTTP за прокси)
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
@@ -151,25 +140,22 @@ if ENVIRONMENT == 'production':
     SESSION_COOKIE_SAMESITE = 'None'
     
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-    
-    CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
-    
-    CORS_ALLOWED_ORIGINS = [
-        'http://localhost:3000',
-        'http://127.0.0.1:3000',
-    ]
-    
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SAMESITE = 'None'
-    SESSION_COOKIE_SAMESITE = 'None'
+    CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
+    CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SAMESITE = 'Lax'
 
 CSRF_COOKIE_HTTPONLY = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+CORS_ALLOW_METHODS = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
+
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600
 SESSION_SAVE_EVERY_REQUEST = True
