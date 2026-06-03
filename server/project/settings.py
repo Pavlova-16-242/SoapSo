@@ -6,6 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
@@ -129,6 +131,7 @@ if ENVIRONMENT == 'production':
     
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    WHITENOISE_ROOT = os.path.join(BASE_DIR, '..', 'client', 'build')
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['*']
@@ -136,6 +139,9 @@ else:
     CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
     CSRF_COOKIE_SECURE = False
     SESSION_COOKIE_SECURE = False
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
 
 CSRF_COOKIE_HTTPONLY = False
 CORS_ALLOW_CREDENTIALS = True
