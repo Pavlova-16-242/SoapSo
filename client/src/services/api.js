@@ -30,12 +30,42 @@ const api = axios.create({
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',  // Добавляем этот заголовок
     }
 });
 
-// Флаг для отслеживания запроса CSRF
+api.interceptors.request.use((config) => {
+    const csrfToken = getCsrfToken();
+    if (csrfToken) {
+        config.headers['X-CSRFToken'] = csrfToken;
+    }
+    return config;
+});
+
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 403 && getCsrfToken() && !error.config._retry) {
+            error.config._retry = true;
+            error.config.headers['X-CSRFToken'] = getCsrfToken();
+            return api(error.config);
+        }
+        return Promise.reject(error);
+    }
+);
+
+export const authAPI = {
+    getCsrf: () => api.get('csrf/'),
+    checkAuth: () => api.get('check-auth/'),
+    register: (d) => api.post('register/', d),
+    login: (d) => api.post('login/', d),
+    logout: () => api.post('logout/'),
+    getProfile: () => api.get('profile/'),
+    updateProfile: (d) => api.patch('profile/update/', d),
+    changePassword: (d) => api.put('profile/change-password/', d),
+};
+
+
+
 let csrfPromise = null;
 
 const refreshCsrfToken = async () => {
@@ -52,10 +82,8 @@ const refreshCsrfToken = async () => {
     return csrfPromise;
 };
 
-// Интерцептор для запросов
 api.interceptors.request.use(
     async (config) => {
-        // Для мутирующих запросов обновляем CSRF-токен
         if (['post', 'put', 'patch', 'delete'].includes(config.method)) {
             await refreshCsrfToken();
         }
@@ -71,26 +99,21 @@ api.interceptors.request.use(
     }
 );
 
-// Интерцептор для ответов
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
         
-        // Обработка SessionInterrupted
         if (error.response?.status === 400 && 
             error.response?.data?.includes?.('SessionInterrupted')) {
-            // Создаем новую сессию через CSRF endpoint
             await refreshCsrfToken();
             
-            // Для запроса логаута - пробуем еще раз с новым токеном
             if (originalRequest.url.includes('/logout/')) {
                 await refreshCsrfToken();
                 const csrfToken = getCsrfToken();
                 if (csrfToken) {
                     originalRequest.headers['X-CSRFToken'] = csrfToken;
                 }
-            // Возвращаем что пользователь не авторизован
             return Promise.resolve({
                 data: {
                     is_authenticated: false,
@@ -101,19 +124,16 @@ api.interceptors.response.use(
             }
         }
         
-        
-        // Тихая обработка ожидаемых ошибок
         if (error.response) {
             const status = error.response.status;
             const url = error.config.url;
             
-            // Ожидаемые ошибки авторизации
             const silentErrors = [
                 { status: 401, url: '/profile/' },
                 { status: 403, url: '/profile/' },
                 { status: 401, url: '/check-auth/' },
                 { status: 403, url: '/check-auth/' },
-                { status: 400, url: '/check-auth/' },  // Добавляем 400 для check-auth
+                { status: 400, url: '/check-auth/' },
                 { status: 401, url: '/orders/' },
                 { status: 403, url: '/orders/' },
                 { status: 401, url: '/cart/' },
@@ -138,18 +158,6 @@ api.interceptors.response.use(
     }
 );
 
-export const authAPI = {
-    getCsrf: () => api.get('csrf/'),
-    checkAuth: () => api.get('check-auth/'),
-    register: (userData) => api.post('register/', userData),
-    login: (credentials) => api.post('login/', credentials),
-    logout: () => api.post('logout/'),
-    getProfile: () => api.get('profile/'),
-    updateProfile: (userData) => api.patch('profile/update/', userData),
-    changePassword: (passwordData) => api.put('profile/change-password/', passwordData),
-    deleteAccount: (password) => api.delete('profile/delete/', { data: { password } }),
-};
-
 export const productsAPI = {
     getProducts: () => api.get('products/'),
     getProduct: (id) => api.get(`products/${id}/`),
@@ -164,10 +172,9 @@ export const cartAPI = {
     getCartCount: () => api.get('cart/count/'),
 };
 
-export default api;
-
 export const orderAPI = {
     createOrder: () => api.post('orders/create/'),
     getOrders: () => api.get('orders/'),
-    getOrder: (id) => api.get(`orders/${id}/`),
 };
+
+export default api;

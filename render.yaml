@@ -1,11 +1,14 @@
 services:
   - type: web
-    name: soapso-server
+    name: soapso
     env: python
     region: frankfurt
     plan: free
-    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput
-    startCommand: gunicorn project.wsgi:application --bind 0.0.0.0:$PORT
+    buildCommand: |
+      cd client && npm install && npm run build && cd ..
+      pip install -r server/requirements.txt
+      cd server && python manage.py migrate && python manage.py create_test_products --clear && python manage.py collectstatic --noinput && cd ..
+    startCommand: cd server && gunicorn project.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: project.settings
@@ -13,7 +16,3 @@ services:
         value: production
       - key: SECRET_KEY
         generateValue: true
-      - key: ALLOWED_HOSTS
-        value: .onrender.com,localhost
-      - key: CORS_ALLOWED_ORIGINS
-        value: https://soapso.netlify.app,http://localhost:3000
