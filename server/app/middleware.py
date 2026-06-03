@@ -5,12 +5,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 class SessionCleanupMiddleware(MiddlewareMixin):
-    """Очищает поврежденные сессии"""
     
     def process_exception(self, request, exception):
         if 'SessionInterrupted' in str(exception):
             try:
-                # Очищаем поврежденную сессию
                 request.session.flush()
             except Exception:
                 pass

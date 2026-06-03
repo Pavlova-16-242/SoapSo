@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 const getApiUrl = () => {
-    const hostname = window.location.hostname;
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         return 'http://localhost:8000/api/';
     }
-    return 'https://soapso-server.onrender.com/api/';
+    return '/api/';
 };
 
 const API_URL = getApiUrl();
