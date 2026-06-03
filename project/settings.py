@@ -115,11 +115,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     'http://127.0.0.1:8000',
-    "https://soapso.netlify.app",
 ]
 
 ENVIRONMENT = os.environ.get('ENVIRONMENT', 'development')
@@ -127,20 +125,21 @@ ENVIRONMENT = os.environ.get('ENVIRONMENT', 'development')
 if ENVIRONMENT == 'production':
     DEBUG = False
     ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '.onrender.com').split(',')
-    
-    CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'https://soapso.netlify.app').split(',')
+
+    CORS_ALLOWED_ORIGINS = [
+        'https://soapso-frontend.onrender.com', 
+        'https://soapso-server.onrender.com',    
+    ]
     CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()
-    
-    # Важно для Render (HTTP за прокси)
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SAMESITE = 'None'
-    SESSION_COOKIE_SAMESITE = 'None'
+    CSRF_COOKIE_SAMESITE = 'Lax'  
+    SESSION_COOKIE_SAMESITE = 'Lax'
     
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
@@ -160,4 +159,3 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-

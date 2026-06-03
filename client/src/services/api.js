@@ -1,13 +1,11 @@
 import axios from 'axios';
 
-// Автоматически определяем URL API
 const getApiUrl = () => {
     const hostname = window.location.hostname;
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
         return 'http://localhost:8000/api/';
     }
-    // Продакшен URL
-    return 'https://soapso.onrender.com/api/'; // ЗАМЕНИ НА СВОЙ RENDER URL
+    return 'https://soapso-server.onrender.com/api/';
 };
 
 const API_URL = getApiUrl();
