@@ -232,7 +232,9 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     
     def get_serializer_context(self):
-        return {'request': self.request}
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
     
 class ProductDetailView(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
