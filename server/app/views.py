@@ -156,16 +156,12 @@ class UserProfileView(APIView):
         return Response(user_data)
     
 class CheckAuthView(APIView):
-    """
-    Проверка авторизации - всегда возвращает 200 OK
-    """
+
     permission_classes = [AllowAny]
-    authentication_classes = []  # Отключаем автоматическую аутентификацию
+    authentication_classes = []  
     
     def get(self, request):
-        # Безопасно проверяем сессию
         try:
-            # Проверяем есть ли сессия и валидна ли она
             session_key = request.session.session_key
             
             if session_key:
@@ -195,7 +191,6 @@ class CheckAuthView(APIView):
                 except Session.DoesNotExist:
                     pass
                 except Exception:
-                    # Сессия повреждена - создаем новую
                     request.session.flush()
             
             return Response({
@@ -237,9 +232,7 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     
     def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context['request'] = self.request
-        return context
+        return {'request': self.request}
     
 class ProductDetailView(generics.RetrieveAPIView):
     permission_classes = [AllowAny]
