@@ -79,7 +79,7 @@ const HomePage = () => {
               <span className="font-myfont text-cyan-600">Ручная работа.</span>
             </h1>
             <p className="lg:my-16 my-8 max-w-96 lg:text-4xl text-lg">Натуральное мыло ручной работы для вашей кожи и удовольствия каждый день.</p>
-            <button className="rounded-full lg:text-3xl py-4 px-12 bg-cyan-600 text-white hover:bg-cyan-900 duration-300">Выбрать мыло<span className="pl-8">→</span></button>        
+            <button onClick={() => navigate('/catalogue')} className="rounded-full lg:text-3xl py-4 px-12 bg-cyan-600 text-white hover:bg-cyan-900 duration-300">Выбрать мыло<span className="pl-8">→</span></button>        
           </div>
           <div className="float-right lg:translate-x-32 translate-x-20 -translate-y-8 lg:max-w-full max-w-96">
             <img src={hero} alt="Декор" className="" loading="lazy"/>
