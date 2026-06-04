@@ -13,11 +13,6 @@ if ENVIRONMENT == 'production':
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SAMESITE = 'Lax'
     SESSION_COOKIE_SAMESITE = 'Lax'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    WHITENOISE_ROOT = os.path.join(BASE_DIR, '..', 'client', 'build')
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static'),
-    ]
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['*']

@@ -1,9 +1,10 @@
 import './input.css'
 import React, { lazy, Suspense } from 'react';
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { HelmetProvider } from 'react-helmet-async';
+
 const HomePage = lazy(() => import('./pages/HomePage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const CartPage = lazy(() => import('./pages/CartPage'));
@@ -21,7 +22,7 @@ function App() {
   return (
     <div className="App">
       <HelmetProvider>
-        <BrowserRouter>
+        <HashRouter>
           <AuthProvider>
             <CartProvider>
               <Suspense fallback={<Loading />}>
@@ -36,7 +37,7 @@ function App() {
               </Suspense>
             </CartProvider>
           </AuthProvider>          
-        </BrowserRouter>  
+        </HashRouter>
       </HelmetProvider>
     </div>
   );
