@@ -4,24 +4,24 @@ import { useAuth } from '../context/AuthContext';
 import mix from '../assets/image/catalogue/mix-long.webp'
 import bag from "../assets/icon/bag-w.webp"
 import bag_hover from "../assets/icon/bag-w-hover.webp"
+import { useToast } from './Toast'
 
 const SoapProductCard = ({ product }) => {
 	const { addToCart, updateCartItem, getCartItemQuantity, getCartItemId } = useCart();
 	const { user } = useAuth();
-	const [showAuthMessage, setShowAuthMessage] = useState(false);
+	const [setShowAuthMessage] = useState(false);
 	const [imageError, setImageError] = useState(false);
+	const { addToast } = useToast();
 	
 	const currentQuantity = getCartItemQuantity(product.id);
 	const cartItemId = getCartItemId(product.id);
 
 	const handleAddToCart = async () => {
-		if (!user) {
-			setShowAuthMessage(true);
-			setTimeout(() => setShowAuthMessage(false), 3000);
-			return;
-		}
-			
-		await addToCart(product.id);
+			if (!user) {
+					addToast('Войдите в аккаунт, чтобы добавлять товары в корзину');
+					return;
+			}
+			await addToCart(product.id);
 	};
 
 	const handleQuantityChange = async (newQuantity) => {
@@ -42,12 +42,6 @@ const SoapProductCard = ({ product }) => {
 
 	const CartButton = () => (
 		<div className="relative">
-			{showAuthMessage && (
-				<div className="absolute -top-12 right-0 bg-yellow-100 border border-yellow-400 text-yellow-700 px-3 py-2 rounded text-sm whitespace-nowrap z-20">
-					Войдите для покупки
-				</div>
-			)}
-				
 			{currentQuantity > 0 ? (
 				<div className="flex items-center gap-1 bg-cyan-600 rounded-full p-1">
 					<button

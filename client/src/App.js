@@ -4,6 +4,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { HelmetProvider } from 'react-helmet-async';
+import { ToastProvider } from './components/Toast';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
@@ -28,19 +29,21 @@ function App() {
         <HashRouter>
           <AuthProvider>
             <CartProvider>
-              <Suspense fallback={<Loading />}>
-                <Routes>
-                  <Route path='/' element={<HomePage />}></Route>
-                  <Route path='/contacts' element={<Contacts/>}></Route>
-                  <Route path='/catalogue' element={<Catalogue/>}></Route>
-                  <Route path='/profile' element={<ProfilePage/>}></Route>
-                  <Route path='/cart' element={<CartPage/>}></Route>
-                  <Route path='/pay' element={<Pay/>}></Route>
-                  <Route path='/how' element={<How/>}></Route>
-                  <Route path='/refund' element={<Refund/>}></Route>
-                  <Route path="*" element={<NotFoundPage />} />
-                </Routes>
-              </Suspense>
+              <ToastProvider>
+                <Suspense fallback={<Loading />}>
+                  <Routes>
+                    <Route path='/' element={<HomePage />}></Route>
+                    <Route path='/contacts' element={<Contacts/>}></Route>
+                    <Route path='/catalogue' element={<Catalogue/>}></Route>
+                    <Route path='/profile' element={<ProfilePage/>}></Route>
+                    <Route path='/cart' element={<CartPage/>}></Route>
+                    <Route path='/pay' element={<Pay/>}></Route>
+                    <Route path='/how' element={<How/>}></Route>
+                    <Route path='/refund' element={<Refund/>}></Route>
+                    <Route path="*" element={<NotFoundPage />} />
+                  </Routes>
+                </Suspense>
+              </ToastProvider>
             </CartProvider>
           </AuthProvider>          
         </HashRouter>
