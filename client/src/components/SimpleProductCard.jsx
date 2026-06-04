@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from './Toast';
+import bag from "../assets/icon/bag-w.webp"
+import bag_hover from "../assets/icon/bag-w-hover.webp"
 
 const SimpleProductCard = ({ product }) => {
     const { addToCart, updateCartItem, getCartItemQuantity, getCartItemId } = useCart();
     const { user } = useAuth();
-    const [showAuthMessage, setShowAuthMessage] = useState(false);
     const [imageError, setImageError] = useState(false);
+    const { addToast } = useToast();
     
     const currentQuantity = getCartItemQuantity(product.id);
     const cartItemId = getCartItemId(product.id);
 
     const handleAddToCart = async () => {
         if (!user) {
-            setShowAuthMessage(true);
-            setTimeout(() => setShowAuthMessage(false), 3000);
+            addToast('Войдите в аккаунт, чтобы добавлять товары в корзину');
             return;
         }
-        
         await addToCart(product.id);
     };
 
@@ -35,7 +36,6 @@ const SimpleProductCard = ({ product }) => {
 
     return (
         <div className="bg-white rounded-2xl overflow-hidden duration-300 group">
-            {/* Изображение */}
             <div className="relative h-64 bg-gradient-to-br from-cyan-100 to-blue-100 overflow-hidden">
                 {getImageUrl() && !imageError ? (
                     <img 
@@ -56,7 +56,6 @@ const SimpleProductCard = ({ product }) => {
                 
             </div>
 
-            {/* Информация */}
             <div className="p-6">
                 <h3 className="text-2xl font-bold text-cyan-900 mb-2">
                     {product.name}
@@ -67,13 +66,7 @@ const SimpleProductCard = ({ product }) => {
                 <span className="font-bold text-cyan-900 text-3xl">
                     {product.price} Р
                 </span>
-                {/* Кнопка корзины */}
                 <div className="relative">
-                    {showAuthMessage && (
-                        <div className="absolute -top-12 left-0 right-0 bg-yellow-100 border border-yellow-400 text-yellow-700 px-3 py-2 rounded-lg text-sm text-center z-10">
-                            Войдите, чтобы добавлять товары в корзину
-                        </div>
-                    )}
                     
                     {currentQuantity > 0 ? (
                         <div className="flex items-center justify-between bg-cyan-600/50 rounded-xl p-3">
@@ -98,9 +91,14 @@ const SimpleProductCard = ({ product }) => {
                     ) : (
                         <button
                             onClick={handleAddToCart}
-                            className="w-full bg-cyan-600 text-white py-4 px-6 rounded-xl hover:bg-cyan-700 transition-all duration-300 font-medium text-lg flex items-center justify-center gap-2 group"
+                            className="group/button w-full bg-cyan-600 text-white py-4 px-6 rounded-xl hover:bg-cyan-700 transition-all duration-300 font-medium text-lg flex items-center justify-center gap-2 group"
                         >
-                            <span>🛒</span>
+                            <div className="relative -translate-y-1">
+                                <img src={bag} alt="Корзина" className="w-4 absolute" loading="lazy"/>
+                                <img src={bag_hover} alt="Корзина" className="w-4 transition-opacity duration-300 opacity-0 group-hover/button:opacity-100" loading="lazy"/>                               
+                            </div>
+
+                            
                             <span>{user ? 'В корзину' : 'Войдите для покупки'}</span>
                         </button>
                     )}

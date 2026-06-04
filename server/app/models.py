@@ -63,6 +63,7 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='processing')
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     total_quantity = models.PositiveIntegerField(default=0)
+    address = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

@@ -1,6 +1,6 @@
 // Библиотеки
 import React, { useState, useEffect } from "react"
-import { useAuth } from '../context/AuthContext.jsx'
+import { useToast } from '../components/Toast';
 import { useNavigate } from 'react-router-dom'
 import { productsAPI } from '../services/api.js'
 // Модули
@@ -29,12 +29,20 @@ import user_kristina from "../assets/image/users/kristina.webp"
 
 
 const HomePage = () => {
-    
-    const { user } = useAuth();
     const [showAuthModal, setShowAuthModal] = useState(false);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const { addToast } = useToast();
+
+    const handleSubscribe = (e) => {
+        e.preventDefault();
+        if (email.trim()) {
+            addToast('Спасибо за подписку!');
+            setEmail('');
+        }
+    };
 
     useEffect(() => {
         fetchProducts();
@@ -62,24 +70,21 @@ const HomePage = () => {
         title="Главная"
         description="Купите натуральное мыло ручной работы: морская свежесть, овсяное молочко, лавандовое облако, мятный бриз и другие ароматы. Доставка по России."
       />
-      {/* Шапка */}
       <Header/>
       <UpButton/>
       <main className="">
-      {/* Главная */}
         <section className="overflow-hidden lg:pt-32 pt-8 lg:-mb-16 max-w-7xl mx-auto px-4">
           <div className="absolute z-10 lg:mx-0 mx-4">
             <h1 className="font-serif lg:text-8xl text-3xl">Красота.<br/>Чистота.<br/>
               <span className="font-myfont text-cyan-600">Ручная работа.</span>
             </h1>
             <p className="lg:my-16 my-8 max-w-96 lg:text-4xl text-lg">Натуральное мыло ручной работы для вашей кожи и удовольствия каждый день.</p>
-            <a href='#hits' className="rounded-full lg:text-3xl py-4 px-12 bg-cyan-600 text-white hover:bg-cyan-900 duration-300">Выбрать мыло<span className="pl-8">→</span></a>        
+            <button className="rounded-full lg:text-3xl py-4 px-12 bg-cyan-600 text-white hover:bg-cyan-900 duration-300">Выбрать мыло<span className="pl-8">→</span></button>        
           </div>
           <div className="float-right lg:translate-x-32 translate-x-20 -translate-y-8 lg:max-w-full max-w-96">
             <img src={hero} alt="Декор" className="" loading="lazy"/>
           </div>
         </section>
-        {/* Хиты */}
           <section id="hits" className="py-8 lg:pt-0 pt-16 xl:block max-w-7xl mx-auto px-4" >
             <div className="flex flex-wrap lg:justify-between">
               <h2 className="font-serif lg:text-6xl text-4xl">Наши хиты</h2>
@@ -87,17 +92,7 @@ const HomePage = () => {
                   <span className="hover:font-semibold duration-300 text-4xl lg:block hidden ">Полный каталог →</span>
                   <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-center bg-cyan-900 duration-300 group-hover:scale-x-100"></span>
                 </button>
-            </div>
-              <div className="mb-8">
-                {!user && (
-                  <div className="bg-cyan-50 rounded-3xl p-4 mt-4">
-                    <p className="text-cyan-900">
-                      Войдите в аккаунт, чтобы добавлять товары в корзину
-                    </p>
-                  </div>
-                )}
-            </div>
-            
+            </div>            
             {loading ? (
               <div className="flex justify-center items-center h-64" style={{ minHeight: '400px' }}>
                 <div className="text-center">
@@ -117,7 +112,6 @@ const HomePage = () => {
               <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-center bg-cyan-900 duration-300 group-hover:scale-x-100"></span>
             </button>
           </section>
-          {/* Факты о компании */}
           <section className="py-8 max-w-7xl mx-auto px-4">
             <h2 className="text-center font-serif lg:text-6xl text-4xl">Почему выбирают нас</h2>
             <div className="text-center bg-white/70 rounded-3xl lg:p-12 p-4 mt-8 grid lg:grid-cols-5 gap-5">
@@ -168,7 +162,6 @@ const HomePage = () => {
               </div>
             </div>
           </section>      
-          {/* Отзывы */}
           <section className="py-16 max-w-7xl mx-auto px-4">
             <h2 className="text-center font-serif lg:text-6xl text-4xl">Отзывы наших заказчиков</h2>
             <div className="grid lg:grid-cols-3 gap-5 mt-8">
@@ -231,7 +224,6 @@ const HomePage = () => {
               </div>
             </div>
           </section>
-          {/* Форма подписки */}
           <section className="py-16 max-w-7xl mx-auto px-4">
             <div className="relative">
               <img src={bubble} alt="Пузырь" className="absolute lg:w-40 w-24 opacity-70 lg:top-12 -top-12 left-6" loading="lazy"/>
@@ -243,20 +235,28 @@ const HomePage = () => {
                 <h3 className="lg:text-3xl font-serif pb-4">Будьте в курсе новинок<br/> и специальных предложений</h3>
                 <p className="lg:text-2xl text-cyan-600">Подпишитесь на нашу рассылку и получите<br/> скидку 10% на первый заказ.</p>
               </div>
-              <div className="">
-                <div className="lg:text-2xl bg-white rounded-full flex m-2 justify-between">
-                  <input type="text" className="rounded-l-full lg:py-4 lg:px-8 py-2 px-4 w-full" placeholder="Ваш e-mail"/>
-                  <button className="lg:py-4 lg:px-8 py-2 px-4 bg-cyan-600 rounded-full text-white">Подписаться</button>
+              <form onSubmit={handleSubscribe} className="">
+                <div className="lg:text-2xl bg-white rounded-full flex m-2 justify-between border border-gray-300">
+                  <input
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="rounded-l-full lg:py-4 lg:px-8 py-2 px-4 w-full rounded-full p-4 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none" 
+                  placeholder="your@email.com"/>
+                  <button type="submit" className="lg:py-4 lg:px-8 py-2 px-4 bg-cyan-600 rounded-full text-white">Подписаться</button>
                 </div>
                 <div className="flex lg:justify-start lg:ml-6 justify-center">
-                  <input type="checkbox" className="mx-2" />
+                  <input
+                  type="checkbox"
+                  required
+                  className="mx-2" />
                   <p className="">Я принимаю условия рассылки</p>
                 </div>              
-              </div>
+              </form >
             </div>
           </section>  
       </main>
-    {/* Подвал */}
     <Footer/>
     {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
     </div>

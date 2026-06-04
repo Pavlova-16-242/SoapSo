@@ -132,7 +132,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'status', 'status_display', 'total_price', 'total_quantity', 
-                  'items', 'created_at', 'updated_at']
+                  'address', 'items', 'created_at', 'updated_at']
 
 class CreateOrderSerializer(serializers.Serializer):
-    pass 
+    address = serializers.CharField(required=False, allow_blank=True)

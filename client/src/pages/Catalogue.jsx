@@ -62,17 +62,13 @@ const Catalogue = () => {
         title="Каталог"
         description="Купите натуральное мыло ручной работы: морская свежесть, овсяное молочко, лавандовое облако, мятный бриз и другие ароматы. Доставка по России."
       />
-			{/* Навигация */}
 			<Header/>
 			<UpButton/>
 
-			{/* Контент */}
 			<main className="max-w-7xl mx-auto px-4 py-8">
-				{/* Заголовок и поиск */}
 				<div className="mb-8">
 					<h1 className="font-serif text-6xl">Каталог</h1>
 					
-					{/* Поиск и сортировка */}
 					<div className="flex flex-col sm:flex-row gap-4">
 						<div className="flex-1 relative">
 							<input
@@ -100,7 +96,6 @@ const Catalogue = () => {
 					</div>
 				</div>
 
-				{/* Сетка товаров */}
 				{loading ? (
 						<div className="flex justify-center items-center h-64">
 							<div className="text-center">

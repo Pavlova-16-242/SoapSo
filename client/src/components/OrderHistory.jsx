@@ -65,7 +65,6 @@ const OrderHistory = () => {
         setExpandedOrder(expandedOrder === orderId ? null : orderId);
     };
 
-    // Вычисляем максимальную высоту контента для анимации
     const getContentHeight = (orderId) => {
         const ref = contentRefs.current[orderId];
         return ref ? ref.scrollHeight : 0;
@@ -106,7 +105,6 @@ const OrderHistory = () => {
                         key={order.id} 
                         className="bg-white/70 rounded-3xl shadow overflow-hidden"
                     >
-                        {/* Основная информация заказа */}
                         <div 
                             className="p-4 sm:p-6 cursor-pointer hover:bg-white transition-colors duration-200"
                             onClick={() => toggleOrder(order.id)}
@@ -127,7 +125,6 @@ const OrderHistory = () => {
                                 </div>
                                 
                                 <div className="flex items-center gap-4 sm:gap-6">
-                                    {/* Миниатюры товаров */}
                                     <div className="flex -space-x-2">
                                         {order.items.slice(0, 4).map((item) => (
                                             <div 
@@ -165,7 +162,6 @@ const OrderHistory = () => {
                                         </p>
                                     </div>
                                     
-                                    {/* Стрелка с анимацией поворота */}
                                     <button className="text-cyan-600 hover:text-cyan-900 transition-all duration-300">
                                         <svg 
                                             className={`w-5 h-5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
@@ -180,7 +176,6 @@ const OrderHistory = () => {
                             </div>
                         </div>
                         
-                        {/* Детали заказа с плавной анимацией */}
                         <div 
                             className="transition-all duration-300 ease-in-out overflow-hidden"
                             style={{
@@ -236,6 +231,13 @@ const OrderHistory = () => {
                                         {formatPrice(order.total_price)}
                                     </span>
                                 </div>
+
+                                {order.address && (
+                                    <div className="mt-3 pt-3 border-t border-gray-200">
+                                        <span className="text-sm text-gray-500">Адрес доставки:</span>
+                                        <p className="text-gray-700 mt-1">{order.address}</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import Header from "../components/Header.jsx"
 import UpButton from "../components/UpButton.jsx"
 import Footer from "../components/Footer.jsx"
@@ -10,9 +10,31 @@ import phone from "../assets/icon/phone.webp"
 import telegram from "../assets/icon/telegram.webp"
 import vkontakte from "../assets/icon/vkontakte.webp"
 import SEO from '../components/SEO'
+import { useToast } from '../components/Toast';
 
 const Contacts = () => {
+    const { addToast } = useToast();
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
 
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        if (formData.name.trim() && formData.email.trim() && formData.message.trim()) {
+            addToast('Сообщение отправлено. Служба поддержки свяжется с вами в течение 24 часов.');
+            setFormData({ name: '', email: '', message: '' });
+        }
+    };
 
   return (
     <div>
@@ -74,14 +96,38 @@ const Contacts = () => {
           </div>
         </div>
         <div className="grid lg:grid-cols-2 bg-white/70 rounded-3xl lg:p-8 p-4 mx-8 items-center gap-4 mb-8">
-          <div className="grid">
+          <form onSubmit={handleSubmit} className="grid">
             <h3 className="text-3xl font-semibold font-serif mx-2">Напишите нам</h3>
             <p className="m-2 text-2xl text-cyan-600">Заполните форму и мы свяжемся с вами</p>
-            <input type="text" className="m-2 rounded-full p-4" placeholder="Ваше имя"/>
-            <input type="text" className="m-2 rounded-full p-4" placeholder="E-mail"/>
-            <input type="text" className="m-2 rounded-2xl h-20  p-4" placeholder="Cooбщение"/>
-            <button className="m-2 rounded-full bg-cyan-600 text-white hover:bg-cyan-900 p-4">Отправить сообщение</button>
-          </div>
+            <input
+            type="text" 
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required            
+            className="m-2 rounded-full p-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none" 
+            placeholder="Ваше имя"/>
+            <input 
+            type="email" 
+            id="contact-email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required 
+            className="m-2 rounded-full p-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none" 
+            placeholder="your@email.com"/>
+            <input 
+            type="text" 
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            className="m-2 rounded-full p-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none" 
+            placeholder="Ваше сообщение..."/>
+            <button  type="submit" className="m-2 rounded-full bg-cyan-600 text-white hover:bg-cyan-900 p-4">Отправить сообщение</button>
+          </form>
           <div className=""><img src={location} alt="Карта" className="rounded-2xl" loading="lazy"/></div>
         </div>
       </main>

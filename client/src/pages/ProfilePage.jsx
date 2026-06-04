@@ -103,21 +103,21 @@ const ProfilePage = () => {
 					<div className="lg:grid grid-cols-6 gap-4 hidden">
 						<h2 className="font-serif text-6xl pb-4 lg:col-start-2 lg:col-span-5">Мои заказы</h2>	
 					</div>
-					<div className="lg:grid grid-cols-6 gap-4 lg:text-left text-center">	
+					<div className="lg:grid grid-cols-6 gap-4">	
 						<nav className="bg-white/70 p-8 rounded-3xl text-2xl mb-4 ">
-							<button onClick={() => setShowEditModal(true)} className="group relative">
+							<button onClick={() => setShowEditModal(true)} className="group relative lg:text-left text-center">
 								<span className="hover:font-semibold duration-300 ">Редактировать профиль</span>
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>
 							</button><br/>
-							<button onClick={() => setShowPasswordModal(true)} className="group relative">
+							<button onClick={() => setShowPasswordModal(true)} className="group relative lg:text-left text-center">
 								<span className="hover:font-semibold duration-300 ">Изменить пароль</span>
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>
 							</button><br/>
-							<button onClick={logout} className="group relative text-red-500 hover:text-red-700">
+							<button onClick={logout} className="group relative text-red-500 hover:text-red-700 lg:text-left text-center">
 								<span className="hover:font-semibold duration-300">Выйти</span>
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>
 							</button><br/>
-							<button onClick={() => setShowDeleteModal(true)} className="group relative mt-16 text-red-500 hover:text-red-700">
+							<button onClick={() => setShowDeleteModal(true)} className="group relative mt-16 text-red-500 hover:text-red-700 lg:text-left text-center">
 								<span className="hover:font-semibold duration-300 ">Удалить аккаунт</span>
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>
 							</button>
@@ -131,7 +131,6 @@ const ProfilePage = () => {
 			</main>
 			<Footer />
 
-			{/* Модальные окна */}
 			{showEditModal && (
 				<EditProfileModal 
 					onClose={() => setShowEditModal(false)}

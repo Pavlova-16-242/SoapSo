@@ -3,7 +3,6 @@ import React, { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import AuthModal from "./AuthModal"
-
 // Изображения:Иконки
 import icon_logo from "../assets/icon/logo.webp"
 import icon_telegram from "../assets/icon/telegram.webp"
@@ -39,20 +38,20 @@ const Footer = () => {
     <div className="static bottom-0">
       <footer className="lg:text-xl text-md flex lg:flex-row flex-col gap-4 justify-around  bg-cyan-100/70 p-16">
         <div className="">
-          <a onClick={()=>navigate("/")} href="#header" 
+          <button onClick={()=>navigate("/")} 
           className="">
             <img src={icon_logo} alt="Shoping bag" className="w-20" loading="lazy"/>
-          </a>
+          </button>
           <p className="w-60">Натуральное мыло ручной работы для вашей кожи и удовольствия каждый день.</p><br/>
           <p className="">&copy; 2026 SoapSo. Мыло ручной работы. Все права защищены.</p>
         </div>
         <div className="lg:text-start text-center">
           <h3 className="font-semibold">Навигация</h3>
           <ul>
-            <li><a onClick={()=>navigate("/")} href="#header" 
+            <li><button onClick={()=>navigate("/")} 
             className="group relative">
               <span className="hover:font-semibold duration-300">Главная</span>
-              <span className="absolute left-0 bottom-0.5 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></a></li>
+              <span className="absolute left-0 bottom-0.5 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
             <li><button onClick={()=>navigate("/catalogue")}
             className="group relative">
               <span className="hover:font-semibold duration-300">Каталог</span>

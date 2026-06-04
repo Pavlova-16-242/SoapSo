@@ -446,30 +446,34 @@ class CreateOrderView(APIView):
                 {'error': 'Корзина пуста'}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
-
+        
         total_price = sum(item.total_price for item in cart_items)
         total_quantity = sum(item.quantity for item in cart_items)
+        
+        # Получаем адрес из запроса
+        address = request.data.get('address', '')
         
         order = Order.objects.create(
             user=request.user,
             status='processing',
             total_price=total_price,
-            total_quantity=total_quantity
+            total_quantity=total_quantity,
+            address=address  # ← СОХРАНЯЕМ АДРЕС
         )
-
+        
         for cart_item in cart_items:
             OrderItem.objects.create(
                 order=order,
                 product=cart_item.product,
                 quantity=cart_item.quantity,
-                price=cart_item.product.price 
+                price=cart_item.product.price
             )
-
+        
         cart_items.delete()
         
         serializer = OrderSerializer(order, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+    
 class OrderListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
@@ -498,29 +502,22 @@ class DeleteAccountView(APIView):
     permission_classes = [IsAuthenticated]
     
     def delete(self, request):
-        user = request.user
         password = request.data.get('password')
         
-        # Проверяем пароль
         if not password:
             return Response(
-                {"error": "Пароль обязателен для удаления аккаунта"},
+                {'error': 'Пароль обязателен'}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
+        
+        user = request.user
         
         if not user.check_password(password):
             return Response(
-                {"error": "Неверный пароль"},
+                {'error': 'Неверный пароль'}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        # Удаляем связанные данные
-        CartItem.objects.filter(user=user).delete()
-        Order.objects.filter(user=user).delete()
-        
-        # Удаляем пользователя
         user.delete()
         
-        return Response({
-            "message": "Аккаунт успешно удален"
-        }, status=status.HTTP_200_OK)
+        return Response({'message': 'Аккаунт успешно удален'}, status=status.HTTP_200_OK)

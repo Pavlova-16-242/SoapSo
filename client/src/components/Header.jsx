@@ -63,7 +63,6 @@ const Header = () => {
 		<>
 			<header className="bg-gradient-to-b from-white px-4 min-h-20">
 				<div className="max-w-7xl mx-auto">
-					{/* Мобильная версия */}
 					<div className="flex lg:hidden justify-between items-center text-md">
 						<button 
 							onClick={() => setIsOpenMenu(!isOpenMenu)} 
@@ -77,8 +76,6 @@ const Header = () => {
 						<button onClick={handleHomeClick} className="">
 							<img src={icon_logo} alt="Логотип" className="w-16 m-4" loading="lazy"/>
 						</button>
-
-						{/* Кнопка корзины для мобильных */}
 						<div className="relative">
 								<button 
 									onClick={handleCartClick}
@@ -96,7 +93,6 @@ const Header = () => {
 						</div>
 					</div>
 
-					{/* Мобильная навигация */}
 					<div className={`overflow-hidden bg-cyan-100/0 transition-all duration-1000 lg:hidden ${
 						isOpenMenu ? "max-h-[500px]" : "max-h-0"
 					}`}>
@@ -114,7 +110,6 @@ const Header = () => {
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-center bg-cyan-900 duration-300 group-hover:scale-x-100"></span>
 							</button>
 														
-							{/* Профиль и выход для мобильных */}
 							{user ? (
 							<>
 								<button className={getNavLinkClass('/profile')} onClick={handleProfileClick}>
@@ -133,7 +128,6 @@ const Header = () => {
 						</nav>
 					</div>
 
-					{/* Версия для ПК */}
 					<div className="hidden lg:flex justify-between items-center text-2xl">
 						<div className="">
 							<button onClick={handleHomeClick} className="">
@@ -141,7 +135,6 @@ const Header = () => {
 							</button>
 						</div>
 
-						{/* Навигация ПК */}
 						<nav className="flex justify-center items-center text-nowrap">
 							<button className={`m-4 ${getNavLinkClass('/')}`} onClick={handleHomeClick}>
 								<span className="hover:font-semibold duration-300">Главная</span>
@@ -189,8 +182,6 @@ const Header = () => {
 					</div>        
 				</div>
 			</header>
-
-			{/* Модальное окно авторизации */}
 			{isOpenAuth && <AuthModal onClose={() => setIsOpenAuth(false)} />}
 		</>
 	);

@@ -18,6 +18,7 @@ const CartPage = () => {
     const [showSuccess, setShowSuccess] = useState(false);
     const [imageErrors, setImageErrors] = useState({});
     const navigate = useNavigate();
+    const [address, setAddress] = useState('');
 
     useEffect(() => {
         loadCart();
@@ -87,12 +88,12 @@ const handleCheckout = async () => {
     setProcessing(true);
     
     try {
-        const response = await orderAPI.createOrder();
+        const response = await orderAPI.createOrder(address);
         console.log('Order created:', response.data);
         
         setShowSuccess(true);
+        setAddress(''); 
         await fetchCart();
-        
     } catch (error) {
         console.error('Error creating order:', error);
         alert('Ошибка при создании заказа');
@@ -145,7 +146,6 @@ const handleCheckout = async () => {
             description="Купите натуральное мыло ручной работы: морская свежесть, овсяное молочко, лавандовое облако, мятный бриз и другие ароматы. Доставка по России."
         />
             <Header />
-            {/* Контент корзины */}
             <main className="max-w-7xl mx-auto px-4 py-8">
                 <h1 className="font-serif text-6xl">Корзина</h1>
 
@@ -183,7 +183,6 @@ const handleCheckout = async () => {
                     </div>
                 ) : (
                     <div className="space-y-6">
-                        {/* Список товаров */}
                         <div className="bg-white/70 rounded-3xl">
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-6">
@@ -204,7 +203,6 @@ const handleCheckout = async () => {
                                             key={item.id}
                                             className="flex flex-col sm:flex-row items-start sm:items-center gap-4 border-b border-gray-200 pb-6 last:border-0"
                                         >
-                                            {/* Изображение товара */}
                                             <div className="w-full sm:w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
                                                 {getImageUrl(item) && !imageErrors[item.id] ? (
                                                     <img 
@@ -222,7 +220,6 @@ const handleCheckout = async () => {
                                                 )}
                                             </div>
                                             
-                                            {/* Информация о товаре */}
                                             <div className="flex-1 min-w-0">
                                                 <h3 className="font-semibold text-gray-800 text-lg mb-1">
                                                     {item.product.name}
@@ -232,7 +229,6 @@ const handleCheckout = async () => {
                                                 </p>
                                             </div>
 
-                                            {/* Управление количеством и цена */}
                                             <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
                                                 <div className="flex items-center border rounded-lg">
                                                     <button
@@ -277,12 +273,25 @@ const handleCheckout = async () => {
                             </div>
                         </div>
 
-                        {/* Итого и оформление заказа */}
                         <div className="bg-white/70 rounded-3xl p-6">
                             <div className="space-y-4">
                                 <div className="flex justify-between items-center text-lg">
                                     <span className="text-gray-600">Товаров в корзине:</span>
                                     <span className="font-semibold">{totalQuantity} шт.</span>
+                                </div>
+                                
+                                <div>
+                                    <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
+                                        Адрес доставки
+                                    </label>
+                                    <textarea
+                                        id="address"
+                                        value={address}
+                                        onChange={(e) => setAddress(e.target.value)}
+                                        placeholder="Введите адрес доставки (город, улица, дом, квартира)"
+                                        rows="3"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none"
+                                    />
                                 </div>
                                 
                                 <div className="border-t border-gray-200 pt-4">

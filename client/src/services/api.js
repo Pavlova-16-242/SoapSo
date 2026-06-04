@@ -62,6 +62,7 @@ export const authAPI = {
     getProfile: () => api.get('profile/'),
     updateProfile: (d) => api.patch('profile/update/', d),
     changePassword: (d) => api.put('profile/change-password/', d),
+    deleteAccount: (password) => api.delete('profile/delete/', { data: { password } }),
 };
 
 
@@ -173,7 +174,7 @@ export const cartAPI = {
 };
 
 export const orderAPI = {
-    createOrder: () => api.post('orders/create/'),
+    createOrder: (address) => api.post('orders/create/', { address }),
     getOrders: () => api.get('orders/'),
 };
 

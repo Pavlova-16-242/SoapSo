@@ -9,7 +9,6 @@ import { useToast } from './Toast'
 const SoapProductCard = ({ product }) => {
 	const { addToCart, updateCartItem, getCartItemQuantity, getCartItemId } = useCart();
 	const { user } = useAuth();
-	const [setShowAuthMessage] = useState(false);
 	const [imageError, setImageError] = useState(false);
 	const { addToast } = useToast();
 	

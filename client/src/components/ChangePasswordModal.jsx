@@ -47,7 +47,6 @@ const ChangePasswordModal = ({ onClose }) => {
                 new_password2: ''
             });
             
-            // Закрываем модальное окно через 2 секунды
             setTimeout(() => {
                 onClose();
             }, 2000);

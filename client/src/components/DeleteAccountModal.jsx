@@ -40,7 +40,6 @@ const DeleteAccountModal = ({ onClose }) => {
     return (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-xl">
-                {/* Заголовок */}
                 <div className="bg-red-50 px-6 py-4 border-b border-red-100">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -57,7 +56,6 @@ const DeleteAccountModal = ({ onClose }) => {
                     </div>
                 </div>
 
-                {/* Контент */}
                 <div className="p-6">
                     {error && (
                         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm flex items-start gap-2">

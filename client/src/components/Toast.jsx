@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 const ToastContext = React.createContext(null);
 
@@ -21,8 +21,7 @@ export const ToastProvider = ({ children }) => {
     return (
         <ToastContext.Provider value={{ addToast }}>
             {children}
-            {/* Контейнер уведомлений */}
-            <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
+            <div className="fixed bottom-24 lg:right-4 z-50 flex flex-col gap-2 m-4">
                 {toasts.map(toast => (
                     <div
                         key={toast.id}
@@ -30,7 +29,6 @@ export const ToastProvider = ({ children }) => {
                                    flex items-center gap-3 min-w-[280px] max-w-[400px]
                                    animate-slide-in"
                     >
-                        <span className="text-xl">🛒</span>
                         <p className="text-sm font-medium flex-1">{toast.message}</p>
                         <button
                             onClick={() => removeToast(toast.id)}
