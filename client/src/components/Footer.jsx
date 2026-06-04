@@ -61,6 +61,10 @@ const Footer = () => {
             className="group relative">
               <span className="hover:font-semibold duration-300">Контакты</span>
               <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
+            <li><button onClick={handleCartClick}
+            className="group relative">
+              <span className="hover:font-semibold duration-300">Корзина</span>
+              <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
             <li><button 
               onClick={handleProfileClick}
               className='group relative'>
@@ -72,11 +76,7 @@ const Footer = () => {
                 <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>                
                 </>)}
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-center bg-cyan-600 duration-300 group-hover:scale-x-100"></span>
-							</button></li>
-            <li><button onClick={handleCartClick}
-            className="group relative">
-              <span className="hover:font-semibold duration-300">Корзина</span>
-              <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
+							</button></li>              
           </ul>
         </div>
         <div className="lg:text-start text-center">
@@ -88,19 +88,11 @@ const Footer = () => {
               <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
             <li><button onClick={()=>navigate("/404")} 
             className="group relative">
-              <span className="hover:font-semibold duration-300">Оплата</span>
-              <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
-            <li><button onClick={()=>navigate("/404")} 
-            className="group relative">
-              <span className="hover:font-semibold duration-300">Доставка</span>
+              <span className="hover:font-semibold duration-300">Оплата и доставка</span>
               <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
             <li><button onClick={()=>navigate("/404")} 
             className="group relative">
               <span className="hover:font-semibold duration-300">Возврат и обмен</span>
-              <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
-            <li><button onClick={()=>navigate("/404")} 
-            className="group relative">
-              <span className="hover:font-semibold duration-300">Вопросы и ответы</span>
               <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
           </ul>
         </div>

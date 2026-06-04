@@ -4,6 +4,6 @@ Allow: /
 Disallow: /api
 Disallow: /admin
 
-Sitemap: https://soapso.netlify.app/sitemap.xml
+Sitemap: https://soapso.onrender.app/sitemap.xml
 
-Host: https://soapso.netlify.app
+Host: https://soapso.onrender.app

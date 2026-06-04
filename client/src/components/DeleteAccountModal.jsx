@@ -23,7 +23,6 @@ const DeleteAccountModal = ({ onClose }) => {
         try {
             await authAPI.deleteAccount(password);
             
-            // Выходим из системы и перенаправляем на главную
             await logout();
             navigate('/');
         } catch (err) {
