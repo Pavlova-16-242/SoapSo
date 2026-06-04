@@ -4,7 +4,12 @@ import UpButton from "../components/UpButton.jsx"
 import Footer from "../components/Footer.jsx"
 import hero from "../assets/image/hero.webp"
 import location from "../assets/image/location.webp"
-import SEO from '../components/SEO';
+import mail from "../assets/icon/mail.webp"
+import geo from "../assets/icon/geo.webp"
+import phone from "../assets/icon/phone.webp"
+import telegram from "../assets/icon/telegram.webp"
+import vkontakte from "../assets/icon/vkontakte.webp"
+import SEO from '../components/SEO'
 
 const Contacts = () => {
 
@@ -17,62 +22,54 @@ const Contacts = () => {
       />      
       <Header/>
       <UpButton/>
-      <main className="">
+      <main className="max-w-7xl mx-auto">
         <div className="lg:flex justify-center m-8">
-          <div className="gap-4">
+          <div className="">
             <h1 className="font-serif lg:text-6xl text-4xl">Контакты</h1>
             <p className="text-cyan-600 lg:text-4xl text-2xl py-4">Мы всегда на связи и готовы<br/> ответить на ваши вопросы</p>
-            <img src={hero} alt="" className="" loading="lazy"/>
+            <img src={hero} alt="Декор" className="" loading="lazy"/>
           </div>
-          <div className="bg-white/70 rounded-3xl lg:p-12 p-4 mt-8 gap-5">
-            <div className="place-items-center flex">
-              <div className="bg-white p-4 rounded-full ">
-                <img src='' alt="" className="lg:m-2 w-24" loading="lazy"/>              
+          <div className="bg-white/70 rounded-3xl lg:p-6 p-4 mt-8 grid grid-cols-3 gap-4">
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+                <img src={geo} alt="Адрем" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
-              <div className="ml-4">
+              <div className="ml-4 col-span-2">
                 <h3 className="lg:text-4xl text-2xl font-semibold py-4">Адрес</h3>
-                <p className="text-cyan-600 lg:text-xl">г. Владивосток, ул. Шепеткова,<br/> дом 14, палата 13</p>
+                <p className="text-cyan-600 lg:text-xl">г. Владивосток, ул. Шепеткова, дом 14, палата 13</p>
               </div>
-            </div>
-            <div className="place-items-center flex">
-              <div className="bg-white p-4 rounded-full">
-                <img src='' alt="" className="lg:m-2 w-24" loading="lazy"/>              
+
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+                <img src={phone} alt="Телефон" className="lg:m-2 place-self-center w-16" loading="lazy"/>              
               </div>
-              <div className="ml-4">
+              <div className="ml-4 col-span-2">
                 <h3 className="lg:text-4xl text-2xl font-semibold py-4">Телефон</h3>
                 <p className="text-cyan-600 lg:text-xl">+7 (800) 504-50-50</p>
                 <p className="text-cyan-600 lg:text-xl">Пн-Пт с 9:00 до 18:00</p>
-              </div>
+
             </div>
-            <div className="place-items-center flex">
-              <div className="bg-white p-4 rounded-full">
-                <img src='' alt="" className="lg:m-2 w-24" loading="lazy"/>              
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+                <img src={mail} alt="Почта" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
-              <div className="ml-4">
+              <div className="ml-4 col-span-2">
                 <h3 className="lg:text-4xl text-2xl font-semibold py-4">E-mail</h3>
                 <p className="text-cyan-600 lg:text-xl">soap50@gmail.com</p>
                 <p className="text-cyan-600 lg:text-xl">Ответим в течении 24 часов</p>
-              </div>
             </div>
-            <div className="place-items-center flex">
-              <div className="bg-white p-4 rounded-full">
-                <img src='' alt="" className="lg:m-2 w-24" loading="lazy"/>              
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+                <img src={telegram} alt="Telegram" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
-              <div className="ml-4">
+              <div className="ml-4 col-span-2">
                 <h3 className="lg:text-4xl text-2xl font-semibold py-4">Telegram</h3>
                 <p className="text-cyan-600 lg:text-xl">@SoapSo</p>
                 <p className="text-cyan-600 lg:text-xl">Быстрые ответы и помощь</p>
               </div>
-            </div>
-            <div className="place-items-center flex">
-              <div className="bg-white p-4 rounded-full">
-                <img src='' alt="" className="lg:m-2 w-24" loading="lazy"/>              
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+                <img src={vkontakte} alt="VKontakte" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
-              <div className="ml-4">
+              <div className="ml-4 col-span-2">
                 <h3 className="lg:text-4xl text-2xl font-semibold py-4">VKontakte</h3>
                 <p className="text-cyan-600 lg:text-xl">@SoapSo</p>
                 <p className="text-cyan-600 lg:text-xl">Новинки, акции, новости</p>
-              </div>
             </div>
           </div>
         </div>
@@ -85,7 +82,7 @@ const Contacts = () => {
             <input type="text" className="m-2 rounded-2xl h-20  p-4" placeholder="Cooбщение"/>
             <button className="m-2 rounded-full bg-cyan-600 text-white hover:bg-cyan-900 p-4">Отправить сообщение</button>
           </div>
-          <div className=""><img src={location} alt="" className="rounded-2xl" loading="lazy"/></div>
+          <div className=""><img src={location} alt="Карта" className="rounded-2xl" loading="lazy"/></div>
         </div>
       </main>
       <Footer/>      

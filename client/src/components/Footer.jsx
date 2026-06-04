@@ -82,15 +82,15 @@ const Footer = () => {
         <div className="lg:text-start text-center">
           <h3 className="font-semibold">Помощь</h3>
           <ul>
-            <li><button onClick={()=>navigate("/404")} 
+            <li><button onClick={()=>navigate("/how")} 
             className="group relative">
               <span className="hover:font-semibold duration-300">Как сделать заказ</span>
               <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
-            <li><button onClick={()=>navigate("/404")} 
+            <li><button onClick={()=>navigate("/pay")} 
             className="group relative">
               <span className="hover:font-semibold duration-300">Оплата и доставка</span>
               <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>
-            <li><button onClick={()=>navigate("/404")} 
+            <li><button onClick={()=>navigate("/refund")} 
             className="group relative">
               <span className="hover:font-semibold duration-300">Возврат и обмен</span>
               <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span></button></li>

@@ -123,7 +123,7 @@ const HomePage = () => {
             <div className="text-center bg-white/70 rounded-3xl lg:p-12 p-4 mt-8 grid lg:grid-cols-5 gap-5">
               <div className="place-items-center lg:grid flex">
                 <div className="bg-white p-4 rounded-full ">
-                  <img src={icon_delivery} alt="" className="lg:m-2 w-24" loading="lazy"/>              
+                  <img src={icon_delivery} alt="Доставка" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
                   <h3 className="lg:text-4xl text-2xl font-semibold lg:p-4">Доставка</h3>
@@ -132,7 +132,7 @@ const HomePage = () => {
               </div>
               <div className="place-items-center lg:grid flex">
                 <div className="bg-white p-4 rounded-full">
-                  <img src={icon_check} alt="" className="lg:m-2 w-24" loading="lazy"/>              
+                  <img src={icon_check} alt="Сертификат" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
                   <h3 className="lg:text-4xl text-2xl font-semibold lg:p-4">Сертификат качества</h3>
@@ -141,7 +141,7 @@ const HomePage = () => {
               </div>
               <div className="place-items-center lg:grid flex">
                 <div className="bg-white p-4 rounded-full">
-                  <img src={icon_eco} alt="" className="lg:m-2 w-24" loading="lazy"/>              
+                  <img src={icon_eco} alt="Эко-продукт" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
                   <h3 className="lg:text-4xl text-2xl font-semibold lg:p-4">Натуральный состав</h3>
@@ -150,7 +150,7 @@ const HomePage = () => {
               </div>
               <div className="place-items-center lg:grid flex">
                 <div className="bg-white p-4 rounded-full">
-                  <img src={icon_gift} alt="" className="lg:m-2 w-24" loading="lazy"/>              
+                  <img src={icon_gift} alt="Подарок" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
                   <h3 className="lg:text-4xl text-2xl font-semibold lg:p-4">Идеальный подарок</h3>
@@ -159,7 +159,7 @@ const HomePage = () => {
               </div>
               <div className="place-items-center lg:grid flex">
                 <div className="bg-white p-4 rounded-full">
-                  <img src={icon_support} alt="" className="lg:m-2 w-24" loading="lazy"/>              
+                  <img src={icon_support} alt="Поддержка" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
                   <h3 className="lg:text-4xl text-2xl font-semibold lg:p-4">На связи 24/7</h3>
@@ -174,59 +174,59 @@ const HomePage = () => {
             <div className="grid lg:grid-cols-3 gap-5 mt-8">
               <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3">
                 <div className=" row-span-2 ">
-                  <img src={icon_quote} alt="" className="w-8 mb-4" loading="lazy"/>
+                  <img src={icon_quote} alt="Ковычки" className="w-8 mb-4" loading="lazy"/>
                   <p className="text-xl text-cyan-600">Я вообще не думала, что мыло может так радовать! “Розовая глина” — это как маленький спа-день дома, кожа после него очень мягкая и нежная. А “Цветочный букет” пахнет так, будто тебе подарили охапку свежих цветов. Теперь из ванной вообще выходить не хочется!</p>              
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="">
                     <div className="flex py-4">
-                      <img src={icon_star} alt="" className="w-4" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4 mx-1" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4 mx-1" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4 mx-1" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4 mx-1" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4" loading="lazy"/>
                     </div>
                     <p className="text-xl font-semibold">Анастасия</p>
                   </div>
-                  <img src={user_anastasia} alt="" className="rounded-full w-20" loading="lazy"/>
+                  <img src={user_anastasia} alt="Анастасия" className="rounded-full w-20" loading="lazy"/>
                 </div>
               </div>
               <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3">
                 <div className="row-span-2">
-                  <img src={icon_quote} alt="" className="w-8 mb-4 " loading="lazy"/>
+                  <img src={icon_quote} alt="Ковычки" className="w-8 mb-4 " loading="lazy"/>
                   <p className="text-xl text-cyan-600">Гайс, это не мыло, это моя новая персоналити. “Лавандовое облако” смывает не только грязь, но и эмоциональный урон после неудачных каток в валик. “Овсяное молочко” — литерали объятья в формате мыла. Кожа после него такая довольная, будто апнула имортала. За “Кокосовый рай” отдельный респект — очень вкусно, жаль что так мало *пускает пузыри изо рта*.</p>              
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="">
                     <div className="flex py-4">
-                      <img src={icon_star} alt="" className="w-4" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4 mx-1" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4 mx-1" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4 mx-1" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4 mx-1" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4" loading="lazy"/>
                     </div>
                     <p className="text-xl font-semibold">Кристина</p>
                   </div>
-                  <img src={user_kristina} alt="" className="rounded-full w-20" loading="lazy"/>
+                  <img src={user_kristina} alt="Кристина" className="rounded-full w-20" loading="lazy"/>
                 </div>
               </div>
               <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3">
                 <div className=" row-span-2">
-                  <img src={icon_quote} alt="" className="w-8 mb-4" loading="lazy"/>
+                  <img src={icon_quote} alt="Ковычки" className="w-8 mb-4" loading="lazy"/>
                   <p className="text-xl text-cyan-600">Попробовала “Хвойный лес” и “Мятный бриз” — оба варианта приятно удивили качеством. У мыла хороший натуральный аромат без резкости, пена мягкая, кожу не сушит даже при ежедневном использовании. Особенно понравился “Мятный бриз” за ощущение свежести после душа. Видно, что продукт сделан аккуратно и с вниманием к деталям.</p>              
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="">
                     <div className="flex py-4">
-                      <img src={icon_star} alt="" className="w-4" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4 mx-1" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4 mx-1" loading="lazy"/>
-                      <img src={icon_star} alt="" className="w-4" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4 mx-1" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4 mx-1" loading="lazy"/>
+                      <img src={icon_star} alt="Звезда" className="w-4" loading="lazy"/>
                     </div>
                     <p className="text-xl font-semibold">Наталья</p>
                   </div>
-                  <img src={user_natalia} alt="" className="rounded-full w-20" loading="lazy"/>
+                  <img src={user_natalia} alt="Наталья" className="rounded-full w-20" loading="lazy"/>
                 </div>
               </div>
             </div>
@@ -234,9 +234,9 @@ const HomePage = () => {
           {/* Форма подписки */}
           <section className="py-16 max-w-7xl mx-auto px-4">
             <div className="relative">
-              <img src={bubble} alt="" className="absolute lg:w-40 w-24 opacity-70 lg:top-12 -top-12 left-6" loading="lazy"/>
-              <img src={bubble} alt="" className="absolute lg:w-24 w-16 lg:right-24 -right-4 opacity-70 lg:-top-4 top-24" loading="lazy"/>
-              <img src={shell} alt="" className="absolute lg:w-48 w-20 drop-shadow-lg right-2 lg:top-36 top-60" loading="lazy"/>
+              <img src={bubble} alt="Пузырь" className="absolute lg:w-40 w-24 opacity-70 lg:top-12 -top-12 left-6" loading="lazy"/>
+              <img src={bubble} alt="Пузырь" className="absolute lg:w-24 w-16 lg:right-24 -right-4 opacity-70 lg:-top-4 top-24" loading="lazy"/>
+              <img src={shell} alt="Ракушка" className="absolute lg:w-48 w-20 drop-shadow-lg right-2 lg:top-36 top-60" loading="lazy"/>
             </div>        
             <div className="bg-cyan-100/70 rounded-3xl lg:p-12 px-4 py-12 lg:flex justify-center items-center lg:gap-16">
               <div className="">
@@ -244,8 +244,8 @@ const HomePage = () => {
                 <p className="lg:text-2xl text-cyan-600">Подпишитесь на нашу рассылку и получите<br/> скидку 10% на первый заказ.</p>
               </div>
               <div className="">
-                <div className="lg:text-2xl bg-white rounded-full flex m-2">
-                  <input type="text" className="rounded-l-full lg:py-4 lg:px-8 py-2 px-4 lg:max-w-3xl " placeholder="Ваш e-mail"/>
+                <div className="lg:text-2xl bg-white rounded-full flex m-2 justify-between">
+                  <input type="text" className="rounded-l-full lg:py-4 lg:px-8 py-2 px-4 w-full" placeholder="Ваш e-mail"/>
                   <button className="lg:py-4 lg:px-8 py-2 px-4 bg-cyan-600 rounded-full text-white">Подписаться</button>
                 </div>
                 <div className="flex lg:justify-start lg:ml-6 justify-center">

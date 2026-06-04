@@ -314,7 +314,7 @@ const SoapProductCard = ({ product }) => {
 			case '12':
 				return (
 					<div className={`duration-300 group bg-white col-span-10  grid-cols-10 rounded-2xl relative overflow-hidden hidden lg:grid`}>
-							<img src={mix} alt="" className="col-span-7 group-hover:scale-105 transition-transform duration-500" loading="lazy"/>
+							<img src={mix} alt="Набор 'Микс'" className="col-span-7 group-hover:scale-105 transition-transform duration-500" loading="lazy"/>
 							<div className="absolute inset-0 "></div>
 							<div className="col-span-3 relative p-4 bg-white flex flex-col justify-between">
 								<div>

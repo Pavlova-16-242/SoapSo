@@ -11,6 +11,9 @@ const CartPage = lazy(() => import('./pages/CartPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const Catalogue = lazy(() => import('./pages/Catalogue'));
 const Contacts = lazy(() => import('./pages/Contacts'));
+const Pay = lazy(() => import('./pages/Pay'));
+const How = lazy(() => import('./pages/How'));
+const Refund = lazy(() => import('./pages/Refund'));
 
 const Loading = () => (
     <div className="flex justify-center items-center min-h-screen">
@@ -32,6 +35,9 @@ function App() {
                   <Route path='/catalogue' element={<Catalogue/>}></Route>
                   <Route path='/profile' element={<ProfilePage/>}></Route>
                   <Route path='/cart' element={<CartPage/>}></Route>
+                  <Route path='/pay' element={<Pay/>}></Route>
+                  <Route path='/how' element={<How/>}></Route>
+                  <Route path='/refund' element={<Refund/>}></Route>
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </Suspense>
