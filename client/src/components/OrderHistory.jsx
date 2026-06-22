@@ -25,14 +25,6 @@ const OrderHistory = () => {
         }
     };
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('ru-RU', {
-            style: 'currency',
-            currency: 'RUB',
-            minimumFractionDigits: 0
-        }).format(price);
-    };
-
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('ru-RU', {
@@ -75,7 +67,7 @@ const OrderHistory = () => {
             <div className="flex justify-center items-center h-64 col-span-5 row-span-2">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Загрузка заказов...</p>
+                    <p className="text-cyan-600">Загрузка заказов...</p>
                 </div>
             </div>
         );
@@ -85,10 +77,10 @@ const OrderHistory = () => {
         return (
             <div className="text-center py-12 col-span-5 row-span-2">
                 <div className="text-6xl mb-4">📦</div>
-                <h3 className="text-2xl font-bold text-gray-700 mb-2">
+                <h3 className="text-2xl font-bold mb-2">
                     У вас пока нет заказов
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-cyan-600">
                     Товары, которые вы закажете, будут отображаться здесь
                 </p>
             </div>
@@ -119,7 +111,7 @@ const OrderHistory = () => {
                                             {order.status_display}
                                         </span>
                                     </div>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-cyan-600">
                                         {formatDate(order.created_at)}
                                     </p>
                                 </div>
@@ -154,11 +146,11 @@ const OrderHistory = () => {
                                     </div>
                                     
                                     <div className="text-right">
-                                        <p className="text-sm text-gray-500">
+                                        <p className="text-sm text-cyan-600">
                                             {order.total_quantity} шт.
                                         </p>
                                         <p className="font-bold text-lg">
-                                            {formatPrice(order.total_price)}
+                                            {(order.total_price)} Р
                                         </p>
                                     </div>
                                     
@@ -185,9 +177,9 @@ const OrderHistory = () => {
                         >
                             <div 
                                 ref={(el) => { contentRefs.current[order.id] = el; }}
-                                className="border-t border-gray-200 p-4 sm:p-6 bg-gray-50/50"
+                                className="border-t border-cyan-600/50 p-4 sm:p-6 bg-gray-50/50"
                             >
-                                <h4 className="font-semibold mb-4">Состав заказа:</h4>
+                                <h4 className="font-semibold mb-4 text-xl">Состав заказа:</h4>
                                 <div className="space-y-3">
                                     {order.items.map((item) => (
                                         <div 
@@ -210,32 +202,32 @@ const OrderHistory = () => {
                                                     )}
                                                 </div>
                                                 <div>
-                                                    <p className="font-medium">{item.product_name}</p>
-                                                    <p className="text-sm text-gray-500">
-                                                        {formatPrice(item.price)} × {item.quantity} шт.
+                                                    <p className="font-medium text-xl">{item.product_name}</p>
+                                                    <p className="text-lg text-cyan-600">
+                                                        {(item.price)} Р × {item.quantity} шт
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="text-right">
-                                                <p className="font-bold">
-                                                    {formatPrice(item.total_price)}
+                                                <p className="font-bold text-xl">
+                                                    {(item.total_price)} Р
                                                 </p>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                                 
-                                <div className="mt-4 pt-4 border-t border-gray-200 flex justify-between items-center">
-                                    <span className="font-semibold">Итого:</span>
+                                <div className="mt-4 pt-4 border-t border-cyan-600/30 flex justify-between items-center">
+                                    <span className="font-semibold text-xl">Итого:</span>
                                     <span className="font-bold text-xl text-cyan-600">
-                                        {formatPrice(order.total_price)}
+                                        {(order.total_price)} Р
                                     </span>
                                 </div>
 
                                 {order.address && (
-                                    <div className="mt-3 pt-3 border-t border-gray-200">
-                                        <span className="text-sm text-gray-500">Адрес доставки:</span>
-                                        <p className="text-gray-700 mt-1">{order.address}</p>
+                                    <div className="mt-3 pt-3 border-t border-cyan-600/30">
+                                        <span className="text-xl">Адрес доставки:</span>
+                                        <p className="text-cyan-600 mt-1">{order.address}</p>
                                     </div>
                                 )}
                             </div>

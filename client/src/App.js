@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { HelmetProvider } from 'react-helmet-async';
 import { ToastProvider } from './components/Toast';
+import CookieConsent from './components/CookieConsent';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
@@ -43,6 +44,7 @@ function App() {
                     <Route path="*" element={<NotFoundPage />} />
                   </Routes>
                 </Suspense>
+                <CookieConsent />
               </ToastProvider>
             </CartProvider>
           </AuthProvider>          

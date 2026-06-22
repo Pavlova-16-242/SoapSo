@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import { useToast } from '../components/Toast';
 import { useNavigate } from 'react-router-dom'
 import { productsAPI } from '../services/api.js'
+import { contactAPI } from '../services/api';
 // Модули
 import Header from "../components/Header.jsx"
 import UpButton from "../components/UpButton.jsx"
@@ -36,13 +37,14 @@ const HomePage = () => {
     const [email, setEmail] = useState('');
     const { addToast } = useToast();
 
-    const handleSubscribe = (e) => {
-        e.preventDefault();
-        if (email.trim()) {
-            addToast('Спасибо за подписку!');
-            setEmail('');
-        }
-    };
+  const handleSubscribe = async (e) => {
+      e.preventDefault();
+      if (email.trim()) {
+          await contactAPI.subscribe(email);
+          addToast('Спасибо за подписку! 📧');
+          setEmail('');
+      }
+  };
 
     useEffect(() => {
         fetchProducts();
@@ -73,7 +75,7 @@ const HomePage = () => {
       <Header/>
       <UpButton/>
       <main className="">
-        <section className="overflow-hidden lg:pt-32 pt-8 lg:-mb-16 max-w-7xl mx-auto px-4">
+        <section className="overflow-hidden lg:pt-32 pt-8 lg:-mb-16 max-w-7xl mx-auto mb-8">
           <div className="absolute z-10 lg:mx-0 mx-4">
             <h1 className="font-serif lg:text-8xl text-3xl">Красота.<br/>Чистота.<br/>
               <span className="font-myfont text-cyan-600">Ручная работа.</span>
@@ -87,7 +89,7 @@ const HomePage = () => {
         </section>
           <section id="hits" className="py-8 lg:pt-0 pt-16 xl:block max-w-7xl mx-auto px-4" >
             <div className="flex flex-wrap lg:justify-between">
-              <h2 className="font-serif lg:text-6xl text-4xl">Наши хиты</h2>
+              <h2 className="font-serif lg:text-6xl text-4xl pb-8">Наши хиты</h2>
                 <button onClick={()=>navigate('/catalogue')} className="group relative m-4">
                   <span className="hover:font-semibold duration-300 text-4xl lg:block hidden ">Полный каталог →</span>
                   <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-center bg-cyan-900 duration-300 group-hover:scale-x-100"></span>
@@ -96,12 +98,12 @@ const HomePage = () => {
             {loading ? (
               <div className="flex justify-center items-center h-64" style={{ minHeight: '400px' }}>
                 <div className="text-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mx-auto mb-4"></div>
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-cyan-600 mx-auto mb-4"></div>
                   <p className="text-gray-600">Загрузка товаров...</p>
                 </div>
               </div>
             ) : (
-              <div className="bg-white/70 rounded-3xl lg:p-8 p-4 grid lg:grid-cols-10 grid-cols-2 gap-5">
+              <div className="bg-white/70 rounded-3xl lg:p-8 p-4 grid lg:grid-cols-10 grid-cols-2 gap-5 border border-white">
                 {products.map(product => (
                   <SoapProductCard key={product.id} product={product} />
                 ))}
@@ -114,9 +116,9 @@ const HomePage = () => {
           </section>
           <section className="py-8 max-w-7xl mx-auto px-4">
             <h2 className="text-center font-serif lg:text-6xl text-4xl">Почему выбирают нас</h2>
-            <div className="text-center bg-white/70 rounded-3xl lg:p-12 p-4 mt-8 grid lg:grid-cols-5 gap-5">
+            <div className="text-center bg-white/70 rounded-3xl lg:p-12 p-4 mt-8 grid lg:grid-cols-5 gap-5 border border-white">
               <div className="place-items-center lg:grid flex">
-                <div className="bg-white p-4 rounded-full ">
+                <div className="bg-white p-4 rounded-full shadow-md">
                   <img src={icon_delivery} alt="Доставка" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
@@ -125,7 +127,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="place-items-center lg:grid flex">
-                <div className="bg-white p-4 rounded-full">
+                <div className="bg-white p-4 rounded-full shadow-md">
                   <img src={icon_check} alt="Сертификат" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
@@ -134,7 +136,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="place-items-center lg:grid flex">
-                <div className="bg-white p-4 rounded-full">
+                <div className="bg-white p-4 rounded-full shadow-md">
                   <img src={icon_eco} alt="Эко-продукт" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
@@ -143,7 +145,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="place-items-center lg:grid flex">
-                <div className="bg-white p-4 rounded-full">
+                <div className="bg-white p-4 rounded-full shadow-md">
                   <img src={icon_gift} alt="Подарок" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
@@ -152,7 +154,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="place-items-center lg:grid flex">
-                <div className="bg-white p-4 rounded-full">
+                <div className="bg-white p-4 rounded-full shadow-md">
                   <img src={icon_support} alt="Поддержка" className="lg:m-2 w-24" loading="lazy"/>              
                 </div>
                 <div className="lg:text-center text-left ml-4">
@@ -165,7 +167,7 @@ const HomePage = () => {
           <section className="py-16 max-w-7xl mx-auto px-4">
             <h2 className="text-center font-serif lg:text-6xl text-4xl">Отзывы наших заказчиков</h2>
             <div className="grid lg:grid-cols-3 gap-5 mt-8">
-              <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3">
+              <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3 border border-white" >
                 <div className=" row-span-2 ">
                   <img src={icon_quote} alt="Ковычки" className="w-8 mb-4" loading="lazy"/>
                   <p className="text-xl text-cyan-600">Я вообще не думала, что мыло может так радовать! “Розовая глина” — это как маленький спа-день дома, кожа после него очень мягкая и нежная. А “Цветочный букет” пахнет так, будто тебе подарили охапку свежих цветов. Теперь из ванной вообще выходить не хочется!</p>              
@@ -184,7 +186,7 @@ const HomePage = () => {
                   <img src={user_anastasia} alt="Анастасия" className="rounded-full w-20" loading="lazy"/>
                 </div>
               </div>
-              <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3">
+              <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3 border border-white">
                 <div className="row-span-2">
                   <img src={icon_quote} alt="Ковычки" className="w-8 mb-4 " loading="lazy"/>
                   <p className="text-xl text-cyan-600">Гайс, это не мыло, это моя новая персоналити. “Лавандовое облако” смывает не только грязь, но и эмоциональный урон после неудачных каток в валик. “Овсяное молочко” — литерали объятья в формате мыла. Кожа после него такая довольная, будто апнула имортала. За “Кокосовый рай” отдельный респект — очень вкусно, жаль что так мало *пускает пузыри изо рта*.</p>              
@@ -203,7 +205,7 @@ const HomePage = () => {
                   <img src={user_kristina} alt="Кристина" className="rounded-full w-20" loading="lazy"/>
                 </div>
               </div>
-              <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3">
+              <div className="bg-white/70 p-8 rounded-3xl grid grid-rows-3 border border-white">
                 <div className=" row-span-2">
                   <img src={icon_quote} alt="Ковычки" className="w-8 mb-4" loading="lazy"/>
                   <p className="text-xl text-cyan-600">Попробовала “Хвойный лес” и “Мятный бриз” — оба варианта приятно удивили качеством. У мыла хороший натуральный аромат без резкости, пена мягкая, кожу не сушит даже при ежедневном использовании. Особенно понравился “Мятный бриз” за ощущение свежести после душа. Видно, что продукт сделан аккуратно и с вниманием к деталям.</p>              
@@ -230,7 +232,7 @@ const HomePage = () => {
               <img src={bubble} alt="Пузырь" className="absolute lg:w-24 w-16 lg:right-24 -right-4 opacity-70 lg:-top-4 top-24" loading="lazy"/>
               <img src={shell} alt="Ракушка" className="absolute lg:w-48 w-20 drop-shadow-lg right-2 lg:top-36 top-60" loading="lazy"/>
             </div>        
-            <div className="bg-cyan-100/70 rounded-3xl lg:p-12 px-4 py-12 lg:flex justify-center items-center lg:gap-16">
+            <div className="bg-cyan-100/70 rounded-3xl lg:p-12 px-4 py-12 lg:flex justify-center items-center lg:gap-16 ">
               <div className="">
                 <h3 className="lg:text-3xl font-serif pb-4">Будьте в курсе новинок<br/> и специальных предложений</h3>
                 <p className="lg:text-2xl text-cyan-600">Подпишитесь на нашу рассылку и получите<br/> скидку 10% на первый заказ.</p>
@@ -251,7 +253,7 @@ const HomePage = () => {
                   type="checkbox"
                   required
                   className="mx-2" />
-                  <p className="">Я принимаю условия рассылки</p>
+                  <p className="">Я принимаю политику обработки персональных данных</p>
                 </div>              
               </form >
             </div>

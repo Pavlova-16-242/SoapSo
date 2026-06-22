@@ -58,7 +58,7 @@ const DeleteAccountModal = ({ onClose }) => {
 
                 <div className="p-6">
                     {error && (
-                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm flex items-start gap-2">
+                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4 text-sm flex items-start gap-2">
                             <span className="flex-shrink-0">❌</span>
                             <span>{error}</span>
                         </div>
@@ -66,7 +66,7 @@ const DeleteAccountModal = ({ onClose }) => {
 
                     {step === 1 ? (
                         <div className="space-y-4">
-                            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
                                 <p className="text-red-800 font-medium mb-2">
                                     Вы уверены, что хотите удалить аккаунт?
                                 </p>
@@ -81,7 +81,7 @@ const DeleteAccountModal = ({ onClose }) => {
                             <div className="flex gap-3">
                                 <button
                                     onClick={onClose}
-                                    className="flex-1 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                                    className="flex-1 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-xl hover:bg-gray-200 transition-colors font-medium"
                                 >
                                     Отмена
                                 </button>
@@ -90,7 +90,7 @@ const DeleteAccountModal = ({ onClose }) => {
                                         setStep(2);
                                         setError('');
                                     }}
-                                    className="flex-1 bg-red-600 text-white py-2.5 px-4 rounded-lg hover:bg-red-700 transition-colors font-medium"
+                                    className="flex-1 bg-red-600 text-white py-2.5 px-4 rounded-xl hover:bg-red-700 transition-colors font-medium"
                                 >
                                     Продолжить
                                 </button>
@@ -98,7 +98,7 @@ const DeleteAccountModal = ({ onClose }) => {
                         </div>
                     ) : (
                         <div className="space-y-4">
-                            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
                                 <p className="text-amber-800 text-sm">
                                     Для подтверждения введите ваш пароль
                                 </p>
@@ -114,7 +114,7 @@ const DeleteAccountModal = ({ onClose }) => {
                                         setError('');
                                     }}
                                     placeholder="Введите ваш пароль"
-                                    className="w-full px-4 py-2.5 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                    className="w-full px-4 py-2.5 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                 />
                             </div>
 
@@ -125,7 +125,7 @@ const DeleteAccountModal = ({ onClose }) => {
                                         setPassword('');
                                         setError('');
                                     }}
-                                    className="flex-1 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                                    className="flex-1 bg-gray-100 text-gray-700 py-2.5 px-4 rounded-xl hover:bg-gray-200 transition-colors font-medium"
                                     disabled={loading}
                                 >
                                     Назад
@@ -133,7 +133,7 @@ const DeleteAccountModal = ({ onClose }) => {
                                 <button
                                     onClick={handleDelete}
                                     disabled={loading || !password}
-                                    className="flex-1 bg-red-600 text-white py-2.5 px-4 rounded-lg hover:bg-red-700 transition-colors font-medium disabled:bg-gray-300 disabled:cursor-not-allowed"
+                                    className="flex-1 bg-red-600 text-white py-2.5 px-4 rounded-xl hover:bg-red-700 transition-colors font-medium disabled:bg-gray-300 disabled:cursor-not-allowed"
                                 >
                                     {loading ? (
                                         <span className="flex items-center justify-center gap-2">

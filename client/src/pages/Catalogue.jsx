@@ -67,7 +67,7 @@ const Catalogue = () => {
 
 			<main className="max-w-7xl mx-auto px-4 py-8">
 				<div className="mb-8">
-					<h1 className="font-serif text-6xl">Каталог</h1>
+					<h1 className="font-serif text-6xl pb-8">Каталог</h1>
 					
 					<div className="flex flex-col sm:flex-row gap-4">
 						<div className="flex-1 relative">
@@ -76,7 +76,7 @@ const Catalogue = () => {
 								placeholder="Поиск по названию или описанию..."
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
-								className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-lg"
+								className="bg-white/70 w-full pl-12 pr-4 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-lg"
 							/>
 							<span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl">
 								🔍
@@ -86,7 +86,7 @@ const Catalogue = () => {
 						<select
 							value={sortBy}
 							onChange={(e) => setSortBy(e.target.value)}
-							className="px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-lg bg-white"
+							className="bg-white/70 px-4 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-lg bg-white"
 						>
 							<option value="default">По умолчанию</option>
 							<option value="price-asc">Цена: по возрастанию</option>
@@ -115,10 +115,10 @@ const Catalogue = () => {
 					</div>
 				) : (
 					<>
-						<p className="text-cyan-900 mb-4">
+						<p className="text-cyan-900 mb-4 text-2xl">
 							Найдено товаров: {filteredProducts.length}
 						</p>
-						<div className="bg-white/70 rounded-3xl lg:p-8 p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+						<div className="bg-white/70 border border-white rounded-3xl lg:p-8 p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 							{filteredProducts.map(product => (
 								<SimpleProductCard key={product.id} product={product} />
 							))}

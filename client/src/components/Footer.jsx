@@ -74,7 +74,6 @@ const Footer = () => {
                 <span className="hover:font-semibold duration-300">Войти</span>
                 <span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>                
                 </>)}
-								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-center bg-cyan-600 duration-300 group-hover:scale-x-100"></span>
 							</button></li>              
           </ul>
         </div>

@@ -72,7 +72,7 @@ const ChangePasswordModal = ({ onClose }) => {
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-8 max-w-md w-full m-2">
+            <div className="bg-white rounded-2xl p-8 max-w-md w-full m-2">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold">Изменить пароль</h2>
                     <button 
@@ -84,13 +84,13 @@ const ChangePasswordModal = ({ onClose }) => {
                 </div>
 
                 {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mb-4">
                         {error}
                     </div>
                 )}
 
                 {success && (
-                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-4">
                         {success}
                     </div>
                 )}
@@ -105,7 +105,7 @@ const ChangePasswordModal = ({ onClose }) => {
                             name="old_password"
                             value={formData.old_password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-600"
                             required
                         />
 
@@ -121,7 +121,7 @@ const ChangePasswordModal = ({ onClose }) => {
                             name="new_password"
                             value={formData.new_password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-600"
                             required
                         />
                     </div>
@@ -135,7 +135,7 @@ const ChangePasswordModal = ({ onClose }) => {
                             name="new_password2"
                             value={formData.new_password2}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-600"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-600"
                             required
                         />
                     </div>
@@ -143,7 +143,7 @@ const ChangePasswordModal = ({ onClose }) => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-cyan-600 text-white py-2 px-4 rounded-md hover:bg-cyan-700 transition-colors disabled:bg-cyan-300"
+                        className="w-full bg-cyan-600 text-white py-2 px-4 rounded-xl hover:bg-cyan-700 transition-colors disabled:bg-cyan-300"
                     >
                         {loading ? 'Изменение...' : 'Изменить пароль'}
                     </button>

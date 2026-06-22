@@ -3,7 +3,6 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from './Toast';
 import bag from "../assets/icon/bag-w.webp"
-import bag_hover from "../assets/icon/bag-w-hover.webp"
 
 const SimpleProductCard = ({ product }) => {
     const { addToCart, updateCartItem, getCartItemQuantity, getCartItemId } = useCart();
@@ -35,8 +34,8 @@ const SimpleProductCard = ({ product }) => {
     };
 
     return (
-        <div className="bg-white rounded-2xl overflow-hidden duration-300 group">
-            <div className="relative h-64 bg-gradient-to-br from-cyan-100 to-blue-100 overflow-hidden">
+        <div className="bg-white rounded-2xl overflow-hidden duration-300 group flex flex-col h-full shadow-md">
+            <div className="relative h-98 bg-gradient-to-br from-cyan-100 to-blue-100 overflow-hidden flex-shrink-0">
                 {getImageUrl() && !imageError ? (
                     <img 
                         src={getImageUrl()} 
@@ -53,26 +52,25 @@ const SimpleProductCard = ({ product }) => {
                         </div>
                     </div>
                 )}
-                
             </div>
 
-            <div className="p-6">
+            <div className="p-6 flex flex-col flex-1">
                 <h3 className="text-2xl font-bold text-cyan-900 mb-2">
                     {product.name}
                 </h3>
                 <p className="text-cyan-600 text-lg mb-2">
                     {product.description}
                 </p>
-                <span className="font-bold text-cyan-900 text-3xl">
+                <span className="font-bold text-cyan-900 text-3xl mb-4">
                     {product.price} Р
                 </span>
-                <div className="relative">
-                    
+                
+                <div className="mt-auto">
                     {currentQuantity > 0 ? (
-                        <div className="flex items-center justify-between bg-cyan-600/50 rounded-xl p-3">
+                        <div className="flex items-center justify-between bg-cyan-600 rounded-full p-2.5">
                             <button
                                 onClick={() => handleQuantityChange(currentQuantity - 1)}
-                                className="w-10 h-10 flex items-center justify-center bg-white rounded-lg hover:bg-gray-100 transition-colors text-xl font-bold text-cyan-600"
+                                className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/50 transition-colors text-xl font-bold text-white duration-300"
                             >
                                 −
                             </button>
@@ -83,7 +81,7 @@ const SimpleProductCard = ({ product }) => {
                             
                             <button
                                 onClick={() => handleQuantityChange(currentQuantity + 1)}
-                                className="w-10 h-10 flex items-center justify-center bg-white rounded-lg hover:bg-gray-100 transition-colors text-xl font-bold text-cyan-600"
+                                className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/50 transition-colors text-xl font-bold text-white duration-300"
                             >
                                 +
                             </button>
@@ -91,13 +89,11 @@ const SimpleProductCard = ({ product }) => {
                     ) : (
                         <button
                             onClick={handleAddToCart}
-                            className="group/button w-full bg-cyan-600 text-white py-4 px-6 rounded-xl hover:bg-cyan-700 transition-all duration-300 font-medium text-lg flex items-center justify-center gap-2 group"
+                            className="group/button w-full bg-cyan-600 text-white py-4 px-6 rounded-full hover:bg-cyan-700 transition-all duration-300 font-medium text-lg flex items-center justify-center gap-2"
                         >
                             <div className="relative -translate-y-1">
-                                <img src={bag} alt="Корзина" className="w-4 absolute" loading="lazy"/>
-                                <img src={bag_hover} alt="Корзина" className="w-4 transition-opacity duration-300 opacity-0 group-hover/button:opacity-100" loading="lazy"/>                               
+                                <img src={bag} alt="Корзина" className="w-4" loading="lazy"/>
                             </div>
-
                             
                             <span>{user ? 'В корзину' : 'Войдите для покупки'}</span>
                         </button>

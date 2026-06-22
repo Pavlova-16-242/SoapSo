@@ -74,9 +74,9 @@ const ProfilePage = () => {
 			<Header />
 			<UpButton/>
 			<main className="max-w-7xl mx-auto px-4 py-16">
-				<h1 className="font-serif text-6xl">Профиль</h1>
-				<div className="flex place-items-center bg-white/70 lg:p-8 p-4 rounded-3xl my-4">
-					<span className="lg:w-32 lg:h-32 w-24 h-24 lg:p-16 p-4 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-600 font-bold lg:text-7xl text-3xl">
+				<h1 className="font-serif text-6xl pb-8">Профиль</h1>
+				<div className="flex place-items-center bg-white/70 lg:p-8 p-4 rounded-3xl my-4 border border-white">
+					<span className="lg:w-32 lg:h-32 w-24 h-24 lg:p-16 p-4 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-600 font-bold lg:text-7xl text-3xl shadow-md">
 						{user.username.charAt(0).toUpperCase()}
 					</span>
 					<div className="mx-8 w-full">
@@ -104,13 +104,13 @@ const ProfilePage = () => {
 						<h2 className="font-serif text-6xl pb-4 lg:col-start-2 lg:col-span-5">Мои заказы</h2>	
 					</div>
 					<div className="lg:grid grid-cols-6 gap-4">	
-						<nav className="bg-white/70 p-8 rounded-3xl text-2xl mb-4 ">
+						<nav className="bg-white/70 p-8 rounded-3xl text-2xl mb-4 border border-white">
 							<button onClick={() => setShowEditModal(true)} className="group relative lg:text-left text-center">
 								<span className="hover:font-semibold duration-300 ">Редактировать профиль</span>
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>
 							</button><br/>
 							<button onClick={() => setShowPasswordModal(true)} className="group relative lg:text-left text-center">
-								<span className="hover:font-semibold duration-300 ">Изменить пароль</span>
+								<span className="hover:font-semibold duration-300 text-nowrap">Изменить пароль</span>
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>
 							</button><br/>
 							<button onClick={logout} className="group relative text-red-500 hover:text-red-700 lg:text-left text-center">
@@ -118,7 +118,7 @@ const ProfilePage = () => {
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>
 							</button><br/>
 							<button onClick={() => setShowDeleteModal(true)} className="group relative mt-16 text-red-500 hover:text-red-700 lg:text-left text-center">
-								<span className="hover:font-semibold duration-300 ">Удалить аккаунт</span>
+								<span className="hover:font-semibold duration-300 text-nowrap">Удалить аккаунт</span>
 								<span className="absolute left-0 bottom-1 h-[2px] w-full scale-x-0 origin-left bg-current duration-300 group-hover:scale-x-100"></span>
 							</button>
 							<p className="text-xs text-gray-400">Это действие нельзя отменить</p>

@@ -11,6 +11,7 @@ import telegram from "../assets/icon/telegram.webp"
 import vkontakte from "../assets/icon/vkontakte.webp"
 import SEO from '../components/SEO'
 import { useToast } from '../components/Toast';
+import { contactAPI } from '../services/api';
 
 const Contacts = () => {
     const { addToast } = useToast();
@@ -27,14 +28,14 @@ const Contacts = () => {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        if (formData.name.trim() && formData.email.trim() && formData.message.trim()) {
-            addToast('Сообщение отправлено. Служба поддержки свяжется с вами в течение 24 часов.');
-            setFormData({ name: '', email: '', message: '' });
-        }
-    };
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      if (formData.name.trim() && formData.email.trim() && formData.message.trim()) {
+          await contactAPI.sendMessage(formData.name, formData.email, formData.message);
+          addToast('Сообщение отправлено. Служба поддержки свяжется с вами в течение 24 часов.');
+          setFormData({ name: '', email: '', message: '' });
+      }
+  };
 
   return (
     <div>
@@ -51,8 +52,8 @@ const Contacts = () => {
             <p className="text-cyan-600 lg:text-4xl text-2xl py-4">Мы всегда на связи и готовы<br/> ответить на ваши вопросы</p>
             <img src={hero} alt="Декор" className="" loading="lazy"/>
           </div>
-          <div className="bg-white/70 rounded-3xl lg:p-6 p-4 mt-8 grid grid-cols-3 gap-4">
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+          <div className="border border-white bg-white/70 rounded-3xl lg:p-6 p-4 mt-8 grid grid-cols-3 gap-4">
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
                 <img src={geo} alt="Адрем" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
@@ -60,7 +61,7 @@ const Contacts = () => {
                 <p className="text-cyan-600 lg:text-xl">г. Владивосток, ул. Шепеткова, дом 14, палата 13</p>
               </div>
 
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
                 <img src={phone} alt="Телефон" className="lg:m-2 place-self-center w-16" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
@@ -69,7 +70,7 @@ const Contacts = () => {
                 <p className="text-cyan-600 lg:text-xl">Пн-Пт с 9:00 до 18:00</p>
 
             </div>
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
                 <img src={mail} alt="Почта" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
@@ -77,7 +78,7 @@ const Contacts = () => {
                 <p className="text-cyan-600 lg:text-xl">soap50@gmail.com</p>
                 <p className="text-cyan-600 lg:text-xl">Ответим в течении 24 часов</p>
             </div>
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
                 <img src={telegram} alt="Telegram" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
@@ -85,7 +86,7 @@ const Contacts = () => {
                 <p className="text-cyan-600 lg:text-xl">@SoapSo</p>
                 <p className="text-cyan-600 lg:text-xl">Быстрые ответы и помощь</p>
               </div>
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center">
+              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
                 <img src={vkontakte} alt="VKontakte" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
@@ -95,7 +96,7 @@ const Contacts = () => {
             </div>
           </div>
         </div>
-        <div className="grid lg:grid-cols-2 bg-white/70 rounded-3xl lg:p-8 p-4 mx-8 items-center gap-4 mb-8">
+        <div className="border border-white grid lg:grid-cols-2 bg-white/70 rounded-3xl lg:p-8 p-4 mx-8 items-center gap-4 mb-8">
           <form onSubmit={handleSubmit} className="grid">
             <h3 className="text-3xl font-semibold font-serif mx-2">Напишите нам</h3>
             <p className="m-2 text-2xl text-cyan-600">Заполните форму и мы свяжемся с вами</p>
@@ -126,9 +127,9 @@ const Contacts = () => {
             required
             className="m-2 rounded-full p-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 resize-none" 
             placeholder="Ваше сообщение..."/>
-            <button  type="submit" className="m-2 rounded-full bg-cyan-600 text-white hover:bg-cyan-900 p-4">Отправить сообщение</button>
+            <button  type="submit" className="m-2 rounded-full bg-cyan-600 text-white hover:bg-cyan-900 p-4 duration-300">Отправить сообщение</button>
           </form>
-          <div className=""><img src={location} alt="Карта" className="rounded-2xl" loading="lazy"/></div>
+          <div className=""><img src={location} alt="Карта" className="rounded-2xl shadow-md" loading="lazy"/></div>
         </div>
       </main>
       <Footer/>      
