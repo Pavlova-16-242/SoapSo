@@ -1,5 +1,6 @@
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
+from django.template.loader import render_to_string
 
 def send_subscribe_notification(email):
     """Уведомление о подписке"""
@@ -34,6 +35,7 @@ def send_contact_notification(name, email, message_text):
     )
 
 def send_order_notification(user_email, order_id, total_price, items, address=''):
+    """Уведомление о новом заказе админу"""
     subject = f'Новый заказ №{order_id} на SoapSo'
     
     items_text = '\n'.join([
@@ -50,19 +52,17 @@ def send_order_notification(user_email, order_id, total_price, items, address=''
     
     Товары:
     {items_text}
+    
+    Дата: {__import__('datetime').datetime.now().strftime('%d.%m.%Y %H:%M')}
     """
     
-    try:
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.ADMIN_EMAIL],
-            fail_silently=False,  # ← Изменил на False для отладки
-        )
-        print(f"Email sent: {subject}")
-    except Exception as e:
-        print(f"Failed to send email: {e}")
+    send_mail(
+        subject=subject,
+        message=message,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[settings.ADMIN_EMAIL],
+        fail_silently=True,
+    )
 
 def send_order_confirmation(user_email, order_id, total_price, items, address=''):
     """Подтверждение заказа клиенту"""
@@ -96,5 +96,5 @@ def send_order_confirmation(user_email, order_id, total_price, items, address=''
         message=message,
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user_email],
-        fail_silently=False,
+        fail_silently=True,
     )

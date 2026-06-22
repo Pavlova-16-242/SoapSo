@@ -21,5 +21,4 @@ urlpatterns = [
     path('profile/delete/', views.DeleteAccountView.as_view(), name='profile-delete'),
     path('subscribe/', views.SubscribeView.as_view(), name='subscribe'),
     path('contact/', views.ContactView.as_view(), name='contact'),
-    path('test-email/', views.TestEmailView.as_view()),
 ]
