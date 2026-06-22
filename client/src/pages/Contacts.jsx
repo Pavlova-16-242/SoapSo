@@ -53,15 +53,15 @@ const Contacts = () => {
             <img src={hero} alt="Декор" className="" loading="lazy"/>
           </div>
           <div className="border border-white bg-white/70 rounded-3xl lg:p-6 p-4 mt-8 grid grid-cols-3 gap-4">
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
-                <img src={geo} alt="Адрем" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
+              <div className="bg-white lg:p-6 p-4 rounded-full lg:w-32 lg:h-32 place-self-center shadow-md">
+                <img src={geo} alt="Адрем" className="lg:m-2 lg:w-16 w-8 place-self-center" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
                 <h3 className="lg:text-4xl text-2xl font-semibold py-4">Адрес</h3>
                 <p className="text-cyan-600 lg:text-xl">г. Владивосток, ул. Шепеткова, дом 14, палата 13</p>
               </div>
 
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
+              <div className="bg-white lg:p-6 p-4 rounded-full lg:w-32 lg:h-32 place-self-center shadow-md">
                 <img src={phone} alt="Телефон" className="lg:m-2 place-self-center w-16" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
@@ -70,7 +70,7 @@ const Contacts = () => {
                 <p className="text-cyan-600 lg:text-xl">Пн-Пт с 9:00 до 18:00</p>
 
             </div>
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
+              <div className="bg-white lg:p-6 p-4 rounded-full lg:w-32 lg:h-32 place-self-center shadow-md">
                 <img src={mail} alt="Почта" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
@@ -78,7 +78,7 @@ const Contacts = () => {
                 <p className="text-cyan-600 lg:text-xl">soap50@gmail.com</p>
                 <p className="text-cyan-600 lg:text-xl">Ответим в течении 24 часов</p>
             </div>
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
+              <div className="bg-white lg:p-6 p-4 rounded-full lg:w-32 lg:h-32 place-self-center shadow-md">
                 <img src={telegram} alt="Telegram" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
@@ -86,7 +86,7 @@ const Contacts = () => {
                 <p className="text-cyan-600 lg:text-xl">@SoapSo</p>
                 <p className="text-cyan-600 lg:text-xl">Быстрые ответы и помощь</p>
               </div>
-              <div className="bg-white p-6 rounded-full w-32 h-32 place-self-center shadow-md">
+              <div className="bg-white lg:p-6 p-4 rounded-full lg:w-32 lg:h-32 place-self-center shadow-md">
                 <img src={vkontakte} alt="VKontakte" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">

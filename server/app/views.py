@@ -13,9 +13,11 @@ from .serializers import *
 from .models import *
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
+from django.core.mail import send_mail
+from django.conf import settings
 from .email_service import (
-    send_subscribe_notification,
-    send_contact_notification,
+    send_subscribe_notification, 
+    send_contact_notification, 
     send_order_notification,
     send_order_confirmation
 )
@@ -487,6 +489,11 @@ class CreateOrderView(APIView):
                 items_data, 
                 address
             )
+            print(f"Admin notification sent for order {order.id}")
+        except Exception as e:
+            print(f"Admin email error: {e}")
+
+        try:
             send_order_confirmation(
                 request.user.email, 
                 order.id, 
@@ -494,8 +501,9 @@ class CreateOrderView(APIView):
                 items_data, 
                 address
             )
+            print(f"Confirmation sent to {request.user.email}")
         except Exception as e:
-            print(f"Email error: {e}")
+            print(f"Confirmation email error: {e}")
         
         serializer = OrderSerializer(order, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -570,3 +578,19 @@ class ContactView(APIView):
             send_contact_notification(name, email, message_text)
             return Response({'message': 'Сообщение отправлено'})
         return Response({'error': 'Все поля обязательны'}, status=400)
+    
+class TestEmailView(APIView):
+    permission_classes = [AllowAny]
+    
+    def get(self, request):
+        try:
+            send_mail(
+                'Test from SoapSo',
+                'This is a test email.',
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.ADMIN_EMAIL],
+                fail_silently=False,
+            )
+            return Response({'status': 'Email sent!'})
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)

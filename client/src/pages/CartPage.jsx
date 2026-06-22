@@ -230,7 +230,7 @@ const handleCheckout = async (e) => {
                                                 </p>
                                             </div>
 
-                                            <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                                            <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
                                                 <div className="flex items-center border rounded-lg border-cyan-600">
                                                     <button
                                                         onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
