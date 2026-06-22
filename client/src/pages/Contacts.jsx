@@ -54,7 +54,7 @@ const Contacts = () => {
           </div>
           <div className="border border-white bg-white/70 rounded-3xl lg:p-6 p-4 mt-8 grid grid-cols-3 gap-4">
               <div className="bg-white lg:p-6 p-4 rounded-full lg:w-32 lg:h-32 place-self-center shadow-md">
-                <img src={geo} alt="Адрем" className="lg:m-2 lg:w-16 w-8 place-self-center" loading="lazy"/>              
+                <img src={geo} alt="Адрем" className="lg:m-2 w-16 place-self-center" loading="lazy"/>              
               </div>
               <div className="ml-4 col-span-2">
                 <h3 className="lg:text-4xl text-2xl font-semibold py-4">Адрес</h3>
