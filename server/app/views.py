@@ -14,8 +14,8 @@ from .models import *
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
 from .email_service import (
-    send_subscribe_notification, 
-    send_contact_notification, 
+    send_subscribe_notification,
+    send_contact_notification,
     send_order_notification,
     send_order_confirmation
 )
