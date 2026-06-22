@@ -13,6 +13,12 @@ from .serializers import *
 from .models import *
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
+from .email_service import (
+    send_subscribe_notification, 
+    send_contact_notification, 
+    send_order_notification,
+    send_order_confirmation
+)
 
 @method_decorator(csrf_exempt, name='dispatch')
     
@@ -442,15 +448,10 @@ class CreateOrderView(APIView):
         cart_items = CartItem.objects.filter(user=request.user).select_related('product')
         
         if not cart_items.exists():
-            return Response(
-                {'error': 'Корзина пуста'}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({'error': 'Корзина пуста'}, status=status.HTTP_400_BAD_REQUEST)
         
         total_price = sum(item.total_price for item in cart_items)
         total_quantity = sum(item.quantity for item in cart_items)
-        
-        # Получаем адрес из запроса
         address = request.data.get('address', '')
         
         order = Order.objects.create(
@@ -458,9 +459,10 @@ class CreateOrderView(APIView):
             status='processing',
             total_price=total_price,
             total_quantity=total_quantity,
-            address=address  # ← СОХРАНЯЕМ АДРЕС
+            address=address
         )
         
+        items_data = []
         for cart_item in cart_items:
             OrderItem.objects.create(
                 order=order,
@@ -468,12 +470,36 @@ class CreateOrderView(APIView):
                 quantity=cart_item.quantity,
                 price=cart_item.product.price
             )
+            items_data.append({
+                'product_name': cart_item.product.name,
+                'quantity': cart_item.quantity,
+                'total_price': str(cart_item.total_price),
+            })
         
         cart_items.delete()
         
+        # Отправляем уведомления
+        try:
+            send_order_notification(
+                request.user.email, 
+                order.id, 
+                total_price, 
+                items_data, 
+                address
+            )
+            send_order_confirmation(
+                request.user.email, 
+                order.id, 
+                total_price, 
+                items_data, 
+                address
+            )
+        except Exception as e:
+            print(f"Email error: {e}")
+        
         serializer = OrderSerializer(order, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
+        
 class OrderListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
@@ -521,3 +547,26 @@ class DeleteAccountView(APIView):
         user.delete()
         
         return Response({'message': 'Аккаунт успешно удален'}, status=status.HTTP_200_OK)
+    
+class SubscribeView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        email = request.data.get('email')
+        if email:
+            send_subscribe_notification(email)
+            return Response({'message': 'Спасибо за подписку!'})
+        return Response({'error': 'Email обязателен'}, status=400)
+
+class ContactView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        name = request.data.get('name')
+        email = request.data.get('email')
+        message_text = request.data.get('message')
+        
+        if name and email and message_text:
+            send_contact_notification(name, email, message_text)
+            return Response({'message': 'Сообщение отправлено'})
+        return Response({'error': 'Все поля обязательны'}, status=400)

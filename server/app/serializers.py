@@ -21,8 +21,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         validated_data.pop('password2')
-        
-        
+                
         if not validated_data.get('username'):
             validated_data['username'] = validated_data['email'].split('@')[0]
         
@@ -37,7 +36,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'phone')
-        read_only_fields = ('id',)
+        read_only_fields = ('id')
 
 class UpdateProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=False, allow_blank=True)
