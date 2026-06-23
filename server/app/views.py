@@ -13,12 +13,12 @@ from .serializers import *
 from .models import *
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
-from .email_service import (
-    send_subscribe_notification, 
-    send_contact_notification, 
-    send_order_notification,
-    send_order_confirmation
-)
+# from .email_service import (
+#     send_subscribe_notification, 
+#     send_contact_notification, 
+#     send_order_notification,
+#     send_order_confirmation
+# )
 
 @method_decorator(csrf_exempt, name='dispatch')
     
@@ -478,24 +478,23 @@ class CreateOrderView(APIView):
         
         cart_items.delete()
         
-        # Отправляем уведомления
-        try:
-            send_order_notification(
-                request.user.email, 
-                order.id, 
-                total_price, 
-                items_data, 
-                address
-            )
-            send_order_confirmation(
-                request.user.email, 
-                order.id, 
-                total_price, 
-                items_data, 
-                address
-            )
-        except Exception as e:
-            print(f"Email error: {e}")
+        # try:
+        #     send_order_notification(
+        #         request.user.email, 
+        #         order.id, 
+        #         total_price, 
+        #         items_data, 
+        #         address
+        #     )
+        #     send_order_confirmation(
+        #         request.user.email, 
+        #         order.id, 
+        #         total_price, 
+        #         items_data, 
+        #         address
+        #     )
+        # except Exception as e:
+        #     print(f"Email error: {e}")
         
         serializer = OrderSerializer(order, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -548,25 +547,25 @@ class DeleteAccountView(APIView):
         
         return Response({'message': 'Аккаунт успешно удален'}, status=status.HTTP_200_OK)
     
-class SubscribeView(APIView):
-    permission_classes = [AllowAny]
+# class SubscribeView(APIView):
+#     permission_classes = [AllowAny]
     
-    def post(self, request):
-        email = request.data.get('email')
-        if email:
-            send_subscribe_notification(email)
-            return Response({'message': 'Спасибо за подписку!'})
-        return Response({'error': 'Email обязателен'}, status=400)
+#     def post(self, request):
+#         email = request.data.get('email')
+#         if email:
+#             send_subscribe_notification(email)
+#             return Response({'message': 'Спасибо за подписку!'})
+#         return Response({'error': 'Email обязателен'}, status=400)
 
-class ContactView(APIView):
-    permission_classes = [AllowAny]
+# class ContactView(APIView):
+#     permission_classes = [AllowAny]
     
-    def post(self, request):
-        name = request.data.get('name')
-        email = request.data.get('email')
-        message_text = request.data.get('message')
+#     def post(self, request):
+#         name = request.data.get('name')
+#         email = request.data.get('email')
+#         message_text = request.data.get('message')
         
-        if name and email and message_text:
-            send_contact_notification(name, email, message_text)
-            return Response({'message': 'Сообщение отправлено'})
-        return Response({'error': 'Все поля обязательны'}, status=400)
+#         if name and email and message_text:
+#             send_contact_notification(name, email, message_text)
+#             return Response({'message': 'Сообщение отправлено'})
+#         return Response({'error': 'Все поля обязательны'}, status=400)

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 import { useToast } from '../components/Toast';
 import { useNavigate } from 'react-router-dom'
 import { productsAPI } from '../services/api.js'
-import { contactAPI } from '../services/api';
+// import { contactAPI } from '../services/api';
 // Модули
 import Header from "../components/Header.jsx"
 import UpButton from "../components/UpButton.jsx"
@@ -40,8 +40,8 @@ const HomePage = () => {
   const handleSubscribe = async (e) => {
       e.preventDefault();
       if (email.trim()) {
-          await contactAPI.subscribe(email);
-          addToast('Спасибо за подписку! 📧');
+          // await contactAPI.subscribe(email);
+          addToast('Спасибо за подписку!');
           setEmail('');
       }
   };

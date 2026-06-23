@@ -25,14 +25,14 @@ export const ToastProvider = ({ children }) => {
                 {toasts.map(toast => (
                     <div
                         key={toast.id}
-                        className="bg-white border border-cyan-200 text-gray-800 px-5 py-3 rounded-2xl shadow-lg 
+                        className="bg-white border border-cyan-600 px-5 py-3 rounded-2xl shadow-lg 
                                    flex items-center gap-3 min-w-[280px] max-w-[400px]
                                    animate-slide-in"
                     >
-                        <p className="text-sm font-medium flex-1">{toast.message}</p>
+                        <p className="text-xl font-medium flex-1">{toast.message}</p>
                         <button
                             onClick={() => removeToast(toast.id)}
-                            className="text-gray-400 hover:text-gray-600 transition-colors ml-2"
+                            className="text-cyan-600 hover:text-cyan-900 transition-colors ml-2"
                         >
                             ✕
                         </button>

@@ -65,10 +65,10 @@ export const authAPI = {
     deleteAccount: (password) => api.delete('profile/delete/', { data: { password } }),
 };
 
-export const contactAPI = {
-    subscribe: (email) => api.post('subscribe/', { email }),
-    sendMessage: (name, email, message) => api.post('contact/', { name, email, message }),
-};
+// export const contactAPI = {
+//     subscribe: (email) => api.post('subscribe/', { email }),
+//     sendMessage: (name, email, message) => api.post('contact/', { name, email, message }),
+// };
 
 let csrfPromise = null;
 

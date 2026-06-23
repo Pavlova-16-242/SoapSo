@@ -11,7 +11,7 @@ import telegram from "../assets/icon/telegram.webp"
 import vkontakte from "../assets/icon/vkontakte.webp"
 import SEO from '../components/SEO'
 import { useToast } from '../components/Toast';
-import { contactAPI } from '../services/api';
+// import { contactAPI } from '../services/api';
 
 const Contacts = () => {
     const { addToast } = useToast();
@@ -31,7 +31,7 @@ const Contacts = () => {
   const handleSubmit = async (e) => {
       e.preventDefault();
       if (formData.name.trim() && formData.email.trim() && formData.message.trim()) {
-          await contactAPI.sendMessage(formData.name, formData.email, formData.message);
+          // await contactAPI.sendMessage(formData.name, formData.email, formData.message);
           addToast('Сообщение отправлено. Служба поддержки свяжется с вами в течение 24 часов.');
           setFormData({ name: '', email: '', message: '' });
       }
